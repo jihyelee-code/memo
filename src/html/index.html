@@ -3,9 +3,55 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
     <title>Memo</title>
 </head>
-<body>
-    
+<body class="vh-100">
+    <div class="container-fluid h-100 d-flex flex-column">
+        <nav style="height: 50px;" class="w-100 d-flex justify-content-center align-items-center">
+            <div class="d-flex justify-content-center">
+                <button type="button" aria-label="Add" button-action="addMemo" 
+                        class="btn btn-sm btn-light">
+                    <i class="bi bi-patch-plus" 
+                       style="font-size: 30px;"></i>
+                </button> 
+            </div>
+        </nav>
+        <main class="w-100 flex-grow-1">
+            <div class="card" style="width: 200px; height: 230px;">
+                <section class="card-header">
+                    <div class="w-100 d-flex justify-content-between">
+                        <div>
+                            <button type="button" aria-label="Color"
+                                    class="btn btn-sm btn-light">
+                                    <i class="bi bi-three-dots-vertical"></i>
+                            </button>
+                        </div>
+                        <div>
+                            <button type="button" aria-label="Minimize"
+                                    class="btn btn-sm btn-light">
+                                    <i class="bi bi-dash-lg"></i>
+                            </button>
+                            <button type="button" aria-label="Remove"
+                                    class="btn btn-sm btn-light">
+                                    <i class="bi bi-x-lg"></i>
+                            </button>
+                        </div>
+                    </div>
+                </section>
+                <section class="card-body">
+                    <textarea class="w-100 h-100"></textarea>
+                </section>
+                <div class="corner-left" corner="left"></div>
+                <div class="corner-top" corner="top"></div>
+                <div class="corner-top-left" corner="top-left"></div>
+                <div class="corner-top-right" corner="top-right"></div>
+                <div class="corner-right" corner="right"></div>
+                <div class="corner-bottom" corner="bottom"></div>
+                <div class="corner-bottom-left" corner="bottom-left"></div>
+                <div class="corner-bottom-right" corner="bottom-right"></div>                
+            </div>
+        </main>
+    </div>
 </body>
 </html>

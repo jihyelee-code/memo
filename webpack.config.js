@@ -5,7 +5,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const TerserPlugin = require('terser-webpack-plugin');
-const { compile } = require('ejs');
+// const { compile } = require('ejs');
 const { Compiler } = require('webpack');
 const CopyPlugin = require('copy-webpack-plugin');
 const devMode = process.env.NODE_ENV.trim() !== "production";
@@ -28,7 +28,7 @@ module.exports = {
     entry: {
         index: [
             './src/js/app.js',
-            './src/scss/_style.scss',
+            './src/scss/bootstrap.scss',
         ]
     },
     devtool: 'inline-source-map',
