@@ -1,14 +1,27 @@
+const { MemoCreator } = require("./creator/memoCreator");
+
 require.context("../image", true);
 
-function createMemoHandler(e){
+function Memo (){
+    this.memoCnt = 0;
+
+}
+
+Memo.prototype.createMemoHandler = function(e, _this){
     e.preventDefault();
+    const box = document.querySelector('#wall');
+    const creator = new MemoCreator(_this.memoCnt);
+    const elems = creator.init();
 
+    _this.memoCnt++;
+    
 }
 
-function memoCreator(){
+Memo.prototype.init = function(){
     const ADD_BTN_ATTR = "addMemo";
-    const addBtn = document.querySelector(`[button-action="${ADD_BTN_ATTR}"]`);
-    addBtn.addEventListener('click', createMemoHandler);
+    const addBtn = document.querySelector(`[evnt="${ADD_BTN_ATTR}"]`);
+    addBtn.addEventListener('click', (e) => this.createMemoHandler(e, this));
 }
 
-memoCreator();
+const memo = new Memo();
+memo.init();
