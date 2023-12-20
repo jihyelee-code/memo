@@ -4,57 +4,59 @@
  * @constructor
  * @classdesc MemoCreator controller
  */
-export function MemoCreator (count){
-    this.TAG = {
-        HEADER: "section",
-        BODY: "section",
-        CORNERS: "div",
-        CONTAINER: "div"
+export function MemoCreator (){
+    this.HEADER = {
+        TAG: "section",
+        CLASS: ["card-header"],
+        INNER_HTML: `
+        <div class="w-100 d-flex justify-content-between">
+            <div>
+                <button type="button" aria-label="Color"
+                        class="btn btn-sm btn-light">
+                        <i class="bi bi-three-dots-vertical"></i>
+                </button>
+            </div>
+            <div>
+                <button type="button" aria-label="Minimize"
+                        class="btn btn-sm btn-light">
+                        <i class="bi bi-dash-lg"></i>
+                </button>
+                <button type="button" aria-label="Remove"
+                        class="btn btn-sm btn-light">
+                        <i class="bi bi-x-lg"></i>
+                </button>
+            </div>
+        </div>
+        `,
     };
 
-    this.HTML = {
-        HEADER: `
-        <${this.TAG.HEADER} class="card-header">
-            <div class="w-100 d-flex justify-content-between">
-                <div>
-                    <button type="button" aria-label="Color"
-                            class="btn btn-sm btn-light">
-                            <i class="bi bi-three-dots-vertical"></i>
-                    </button>
-                </div>
-                <div>
-                    <button type="button" aria-label="Minimize"
-                            class="btn btn-sm btn-light">
-                            <i class="bi bi-dash-lg"></i>
-                    </button>
-                    <button type="button" aria-label="Remove"
-                            class="btn btn-sm btn-light">
-                            <i class="bi bi-x-lg"></i>
-                    </button>
-                </div>
-            </div>
-        </${this.TAG.HEADER}>
-        `,
-        BODY: `
-        <${this.TAG.BODY} class="card-body">
-            <textarea class="w-100 h-100"></textarea>
-        </${this.TAG.BODY}>`,
-        CORNERS: `
-        <${this.TAG.CORNERS}>
-            <div class="corner-left" corner="left"></div>
-            <div class="corner-top" corner="top"></div>
-            <div class="corner-top-left" corner="top-left"></div>
-            <div class="corner-top-right" corner="top-right"></div>
-            <div class="corner-right" corner="right"></div>
-            <div class="corner-bottom" corner="bottom"></div>
-            <div class="corner-bottom-left" corner="bottom-left"></div>
-            <div class="corner-bottom-right" corner="bottom-right"></div>
-        </${this.TAG.CORNERS}>
-            `,
-        CONTAINER:`
-        <${this.TAG.CONTAINER} class="card position-absolute" data-name="${count}">
-        </${this.TAG.CONTAINER}>
+    this.BODY = {
+        TAG: "section",
+        CLASS: ["card-body"],
+        INNER_HTML: `
+        <textarea class="w-100 h-100"></textarea>
         `
+    };
+
+    this.CORNERS = {
+        TAG: "div",
+        CLASS: [],
+        INNER_HTML : `
+        <div class="corner-left" corner="left"></div>
+        <div class="corner-top" corner="top"></div>
+        <div class="corner-top-left" corner="top-left"></div>
+        <div class="corner-top-right" corner="top-right"></div>
+        <div class="corner-right" corner="right"></div>
+        <div class="corner-bottom" corner="bottom"></div>
+        <div class="corner-bottom-left" corner="bottom-left"></div>
+        <div class="corner-bottom-right" corner="bottom-right"></div>
+        `
+    };
+
+    this.CONTAINER = {
+        TAG: "div",
+        CLASS: ["card", "position-absolute"],
+        INNER_HTML: ``
     };
 
 }
@@ -67,11 +69,13 @@ export function MemoCreator (count){
  * @return {MemoCreator}
  */
 MemoCreator.prototype.createElem = function (target){
-    const elem = document.createElement(this.TAG[target]);
-    elem.outerHTML = this.HTML[target];
+    const elem = document.createElement(this[target].TAG);
+    elem.classList.add(...this[target].CLASS);
+    elem.innerHTML = this[target].INNER_HTML;
 
     return elem;
 }
+
 
 /**
  * @author JHLEE
@@ -86,6 +90,11 @@ MemoCreator.prototype.init = function (){
     const body = this.createElem("BODY"); 
     const corners = this.createElem("CORNERS"); 
 
+    container.appendChild(header);
+    container.appendChild(body);
+    container.appendChild(corners);
+
+    const html = container;
     const elems = {
         container,
         header,
@@ -94,7 +103,7 @@ MemoCreator.prototype.init = function (){
     }
 
 
-    return elems;
+    return {html, elems};
 }
 
 
