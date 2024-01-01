@@ -7,7 +7,7 @@
 export function MemoCreator (){
     this.HEADER = {
         TAG: "section",
-        CLASS: ["card-header"],
+        CLASS_NAME: ["card-header"],
         INNER_HTML: `
         <div class="w-100 d-flex justify-content-between">
             <div>
@@ -32,7 +32,7 @@ export function MemoCreator (){
 
     this.BODY = {
         TAG: "section",
-        CLASS: ["card-body"],
+        CLASS_NAME: ["card-body"],
         INNER_HTML: `
         <textarea class="w-100 h-100"></textarea>
         `
@@ -40,7 +40,7 @@ export function MemoCreator (){
 
     this.CORNERS = {
         TAG: "div",
-        CLASS: [],
+        CLASS_NAME: [],
         INNER_HTML : `
         <div class="corner-left" corner="left"></div>
         <div class="corner-top" corner="top"></div>
@@ -55,7 +55,7 @@ export function MemoCreator (){
 
     this.CONTAINER = {
         TAG: "div",
-        CLASS: ["card", "position-absolute"],
+        CLASS_NAME: ["card", "position-absolute"],
         INNER_HTML: ``
     };
 
@@ -70,7 +70,7 @@ export function MemoCreator (){
  */
 MemoCreator.prototype.createElem = function (target){
     const elem = document.createElement(this[target].TAG);
-    elem.classList.add(...this[target].CLASS);
+    elem.classList.add(...this[target].CLASS_NAME);
     elem.innerHTML = this[target].INNER_HTML;
 
     return elem;

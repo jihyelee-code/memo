@@ -1,3 +1,4 @@
+import { HEADER_HEIGHT, NAV_TOP_HEIGHT } from "../app";
 import { getZIndex, store } from "../reducer/store";
 
 /**
@@ -28,14 +29,14 @@ export function DragnDrop(){
  * @return {DragnDrop}
  */
 DragnDrop.prototype.init = function (header){
-  header.addEventListener('mousedown', e => this.mouseDownHandler(e));
+  header.addEventListener('mousedown', this.mouseDownHandler);
   return this;
 };
 
 DragnDrop.prototype.bodyEvnts = function (){
-  this.body.addEventListener('mouseup', e => this.mouseUpHandler(e));
-  this.body.addEventListener('mouseleave', e => this.mouseLeaveHandler(e));
-  this.body.addEventListener('mousemove', e => this.mouseMoveHandler(e));
+  this.body.addEventListener('mouseup', this.mouseUpHandler);
+  this.body.addEventListener('mouseleave', this.mouseLeaveHandler);
+  this.body.addEventListener('mousemove', this.mouseMoveHandler);
   return this;
 }
 
@@ -55,10 +56,10 @@ DragnDrop.prototype.mouseDownHandler = function (e){
       x: e.layerX,
       y: e.layerY,
   };
-  const headerTitle = e.currentTarget;
-  const name = headerTitle.dataset.name;
-  
+
+  const name = e.currentTarget.parentElement.dataset.name;
   const zIndex = getZIndex();
+
   store.dispatch({ type: "modal/active", name, zIndex });
   store.dispatch({ type: "current/active", name, isModal: true });
   store.dispatch({
@@ -80,7 +81,7 @@ DragnDrop.prototype.mouseDownHandler = function (e){
  * @param {Event} e Mouse move event
  * @return {DragnDrop}
  */
-DragnDrop.prototype.mouseMoveHandler = function (e, zIndex){
+DragnDrop.prototype.mouseMoveHandler = function (e){
   e.preventDefault();
   e.stopPropagation();
   const getDraggable = (state) => state.draggable;
@@ -89,18 +90,14 @@ DragnDrop.prototype.mouseMoveHandler = function (e, zIndex){
   if (!draggableStatus.mouseOn) {
     return;
   }
-  console.log(e.target)
 
-  const headerHeight = 50;
-  const navTopHeight = 50;
   const mousePosition = draggableStatus.mousePosition;
   const name = draggableStatus.name;
-  const computedY = e.pageY - mousePosition.y - navTopHeight;
-
+  const computedY = e.pageY - mousePosition.y - NAV_TOP_HEIGHT;
 
   let modalPosition = {
     x: e.pageX - mousePosition.x, 
-    y: computedY < headerHeight ? headerHeight : computedY,
+    y: computedY < HEADER_HEIGHT ? HEADER_HEIGHT : computedY,
   };
 
   store.dispatch({
