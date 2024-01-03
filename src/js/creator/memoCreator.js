@@ -94,7 +94,6 @@ MemoCreator.prototype.init = function (){
     container.appendChild(body);
     container.appendChild(corners);
 
-    const html = container;
     const elems = {
         container,
         header,
@@ -103,7 +102,7 @@ MemoCreator.prototype.init = function (){
     }
 
 
-    return {html, elems};
+    return elems;
 }
 
 

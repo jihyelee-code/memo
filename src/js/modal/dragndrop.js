@@ -1,4 +1,4 @@
-import { HEADER_HEIGHT, NAV_TOP_HEIGHT } from "../app";
+import { MEMO_HEADER_HEIGHT } from "../app";
 import { getZIndex, store } from "../reducer/store";
 
 /**
@@ -58,6 +58,7 @@ DragnDrop.prototype.mouseDownHandler = function (e){
   };
 
   const name = e.currentTarget.parentElement.dataset.name;
+  // console.log(name)
   const zIndex = getZIndex();
 
   store.dispatch({ type: "modal/active", name, zIndex });
@@ -67,8 +68,6 @@ DragnDrop.prototype.mouseDownHandler = function (e){
     name,
     mousePosition: mousePositionOnModal,
   });
-
-  // this.body.addEventListener('mousemove', e => this.mouseMoveHandler(e, zIndex));
 
   return this;
 }
@@ -93,11 +92,12 @@ DragnDrop.prototype.mouseMoveHandler = function (e){
 
   const mousePosition = draggableStatus.mousePosition;
   const name = draggableStatus.name;
-  const computedY = e.pageY - mousePosition.y - NAV_TOP_HEIGHT;
+  // const computedY = e.pageY - mousePosition.y - NAV_TOP_HEIGHT;
+  const computedY = e.pageY - mousePosition.y;
 
   let modalPosition = {
     x: e.pageX - mousePosition.x, 
-    y: computedY < HEADER_HEIGHT ? HEADER_HEIGHT : computedY,
+    y: computedY < MEMO_HEADER_HEIGHT ? MEMO_HEADER_HEIGHT : computedY,
   };
 
   store.dispatch({

@@ -1,5 +1,5 @@
 import { DragnResize } from "./dragnResize";
-import { ModalEvents } from "./modalEvents";
+import { ModalEvents } from "./modalState";
 
 /**
  * Modal Information Container
