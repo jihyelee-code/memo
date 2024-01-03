@@ -18,22 +18,6 @@ function Memo (){
     this.dragnDrop = null;
 }
 
-Memo.prototype.updateMemoInfo = function (infos){
-    infos.forEach( info => {
-
-        //creates modal only when it does not exit
-        if(!this.modals[info.name]){
-            this.modals[info.name] = info;
-            
-            store.dispatch({ type: "modal/update", 
-                name: info.name, x: info.x, y: info.y,
-                width: info.width, height: info.height, zIndex: info.zIndex ? info.zIndex : 0
-            });
-        }
-
-    })
-}
-
 
 Memo.prototype.createMemoHandler = function(e, _this){
     e.preventDefault();
@@ -53,8 +37,7 @@ Memo.prototype.createMemoHandler = function(e, _this){
     //also, subscribe if modal attributes such as 
     //width, height, z-index and position got changed.
     this.ms = new ModalState(elems.container);
-    this.ms.subscribeState();
-    this.ms.updateAsCurrent(this.ms);
+    this.ms.init();
 
     _this.memoCnt++;
     

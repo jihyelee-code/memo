@@ -69,9 +69,9 @@ ModalState.prototype.updateAsCurrent = function (_this){
  * @function
  * @description Update current clicked modal's z-index.
  */
-ModalState.prototype.zIndexHandler = function(e){
+ModalState.prototype.zIndexHandler = function(e, _this){
     e.stopPropagation();
-    this.updateAsCurrent(this);
+    _this.updateAsCurrent(_this);
 }
 
 /**
@@ -147,10 +147,10 @@ ModalState.prototype.focusOutHandler = function (e){
  * @description Initialize all the modal events
  */
 ModalState.prototype.init = function (){
+  this.subscribeState();
+  this.updateAsCurrent(this);
   //z index event
-  this.modal.addEventListener('click', this.zIndexHandler);
-
-  // this.setPosition();
+  this.modal.addEventListener('click', e => this.zIndexHandler(e, this));
 }
 
 ModalState.prototype.initBody = function (){
