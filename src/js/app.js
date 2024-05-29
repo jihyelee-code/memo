@@ -9,12 +9,7 @@ require.context("../image", true);
 export const MEMO_HEADER_HEIGHT = 50;
 
 function Memo (){
-    this.memoCnt = 1;
-    this.defaultSize = {
-        width: "200px",
-        height: "230px"
-    };
-
+    this.memoCnt = 0;
     this.dragnDrop = null;
 }
 
@@ -26,16 +21,14 @@ Memo.prototype.createMemoHandler = function(e, _this){
     const creator = new MemoCreator();
     const elems = creator.init();
     elems.container.setAttribute('data-name', `memo_${_this.memoCnt}`);
-    elems.container.style.width = this.defaultSize.width;
-    elems.container.style.height = this.defaultSize.height;
     //append it to html
     box.appendChild(elems.container);
 
-    //then, init drag and drop functionality
+    //Init drag and drop functionality
     this.dragnDrop.init(elems.header);
 
-    //also, subscribe if modal attributes such as 
-    //width, height, z-index and position got changed.
+    //Also, subscribe if modal attributes such as 
+    //width, height, z-index and position get changes.
     this.ms = new ModalState(elems.container);
     this.ms.init();
 
@@ -50,6 +43,8 @@ Memo.prototype.init = function(){
     
     this.dragnDrop = new DragnDrop();
     this.dragnDrop.bodyEvnts();
+
+    
 }
 
 const memo = new Memo();

@@ -1,3 +1,5 @@
+import { MEMO_HEADER_HEIGHT } from "../app";
+
 /**
  * @author JHLEE
  * @class MemoCreator
@@ -5,6 +7,21 @@
  * @classdesc MemoCreator controller
  */
 export function MemoCreator (){
+    this.ELEMS = {
+        CONTAINER: "CONTAINER",
+        HEADER: "HEADER",
+        BODY: "BODY",
+        CORNERS: "CORNERS"
+    };
+
+    this.defSetting = {
+        width: "200px",
+        height: "230px",
+        top: 0,
+        left: 0,
+        randomPosRange: 50
+    };
+
     this.HEADER = {
         TAG: "section",
         CLASS_NAME: ["card-header"],
@@ -85,10 +102,15 @@ MemoCreator.prototype.createElem = function (target){
  * @return {MemoCreator}
  */
 MemoCreator.prototype.init = function (){
-    const container = this.createElem("CONTAINER");
-    const header = this.createElem("HEADER"); 
-    const body = this.createElem("BODY"); 
-    const corners = this.createElem("CORNERS"); 
+    const container = this.createElem(this.ELEMS.CONTAINER);
+    const header = this.createElem(this.ELEMS.HEADER); 
+    const body = this.createElem(this.ELEMS.BODY); 
+    const corners = this.createElem(this.ELEMS.CORNERS); 
+
+    container.style.width = this.defSetting.width;
+    container.style.height = this.defSetting.height;
+    container.style.top = `${this.defSetting.top + MEMO_HEADER_HEIGHT + getRandomInt(this.defSetting.randomPosRange)}px`;
+    container.style.left = `${this.defSetting.left + getRandomInt(this.defSetting.randomPosRange)}px`; 
 
     container.appendChild(header);
     container.appendChild(body);
@@ -106,3 +128,7 @@ MemoCreator.prototype.init = function (){
 }
 
 
+function getRandomInt(max) {
+
+    return Math.floor(Math.random() * max);
+  }
