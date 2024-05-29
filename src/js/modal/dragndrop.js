@@ -1,4 +1,4 @@
-import { MEMO_HEADER_HEIGHT } from "../app";
+import { NAV_HEIGHT } from "../app";
 import { getZIndex, store } from "../reducer/store";
 
 /**
@@ -97,7 +97,7 @@ DragnDrop.prototype.mouseMoveHandler = function (e){
 
   let modalPosition = {
     x: e.pageX - mousePosition.x, 
-    y: computedY < MEMO_HEADER_HEIGHT ? MEMO_HEADER_HEIGHT : computedY,
+    y: computedY < NAV_HEIGHT ? NAV_HEIGHT : computedY,
   };
 
   store.dispatch({

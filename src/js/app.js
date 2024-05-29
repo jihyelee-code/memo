@@ -1,3 +1,4 @@
+import { DragnResize } from "./modal/dragnResize";
 import { ModalState } from "./modal/modalState";
 import { store } from "./reducer/store";
 
@@ -6,11 +7,16 @@ const { DragnDrop } = require("./modal/dragndrop");
 
 require.context("../image", true);
 
-export const MEMO_HEADER_HEIGHT = 50;
+export const NAV_HEIGHT = 50;
 
 function Memo (){
     this.memoCnt = 0;
+    this.size = {
+        width: "200",
+        height: "230"
+    };
     this.dragnDrop = null;
+    this.dragnResize = null;
 }
 
 
@@ -18,14 +24,24 @@ Memo.prototype.createMemoHandler = function(e, _this){
     e.preventDefault();
     //create a memo box through MemoCreator
     const box = document.querySelector('#wall');
-    const creator = new MemoCreator();
+    const creator = new MemoCreator(this.size.width, this.size.height);
     const elems = creator.init();
     elems.container.setAttribute('data-name', `memo_${_this.memoCnt}`);
     //append it to html
     box.appendChild(elems.container);
 
+    store.dispatch({
+        type: "modal/update",
+        name: `memo_${_this.memoCnt}`,
+        x: Number(elems.container.style.left.match(/\d+/g)[0]),
+        y: Number(elems.container.style.top.match(/\d+/g)[0]),
+        width: Number(this.size.width),
+        height: Number(this.size.height)
+    });
+
     //Init drag and drop functionality
     this.dragnDrop.init(elems.header);
+    this.dragnResize.init(elems.container);
 
     //Also, subscribe if modal attributes such as 
     //width, height, z-index and position get changes.
@@ -44,7 +60,8 @@ Memo.prototype.init = function(){
     this.dragnDrop = new DragnDrop();
     this.dragnDrop.bodyEvnts();
 
-    
+    this.dragnResize = new DragnResize(this.size.width, this.size.height);
+    this.dragnResize.subscribe();
 }
 
 const memo = new Memo();

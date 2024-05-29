@@ -3,7 +3,7 @@ import current from "./current";
 import draggable from "./draggable";
 import modal from "./modal";
 import resizer from "./resizer";
-import heightResizer from "./heightResizer";
+// import heightResizer from "./heightResizer";
 
 export let store = configureStore({
     reducer: {

@@ -150,7 +150,7 @@ ModalState.prototype.init = function (){
   this.subscribeState();
   this.updateAsCurrent(this);
   //z index event
-  this.modal.addEventListener('click', e => this.zIndexHandler(e, this));
+  this.modal.addEventListener('mousedown', e => this.zIndexHandler(e, this));
 }
 
 ModalState.prototype.initBody = function (){

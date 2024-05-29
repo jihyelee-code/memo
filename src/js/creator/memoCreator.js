@@ -1,4 +1,4 @@
-import { MEMO_HEADER_HEIGHT } from "../app";
+import { NAV_HEIGHT } from "../app";
 
 /**
  * @author JHLEE
@@ -6,7 +6,7 @@ import { MEMO_HEADER_HEIGHT } from "../app";
  * @constructor
  * @classdesc MemoCreator controller
  */
-export function MemoCreator (){
+export function MemoCreator (width, height){
     this.ELEMS = {
         CONTAINER: "CONTAINER",
         HEADER: "HEADER",
@@ -15,8 +15,8 @@ export function MemoCreator (){
     };
 
     this.defSetting = {
-        width: "200px",
-        height: "230px",
+        width: width + "px",
+        height: height + "px",
         top: 0,
         left: 0,
         randomPosRange: 50
@@ -109,7 +109,7 @@ MemoCreator.prototype.init = function (){
 
     container.style.width = this.defSetting.width;
     container.style.height = this.defSetting.height;
-    container.style.top = `${this.defSetting.top + MEMO_HEADER_HEIGHT + getRandomInt(this.defSetting.randomPosRange)}px`;
+    container.style.top = `${this.defSetting.top + NAV_HEIGHT + getRandomInt(this.defSetting.randomPosRange)}px`;
     container.style.left = `${this.defSetting.left + getRandomInt(this.defSetting.randomPosRange)}px`; 
 
     container.appendChild(header);

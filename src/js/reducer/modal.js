@@ -40,7 +40,7 @@ export default function modal(state = {}, action) {
                 ...state, 
                 [action.name]: {
                     name: action.name, 
-                    zIndex: action.zIndex,
+                    // zIndex: action.zIndex,
                     x: action.x, y: action.y, 
                     width: action.width, 
                     height: action.height,
