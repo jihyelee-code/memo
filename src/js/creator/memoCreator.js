@@ -29,16 +29,24 @@ export function MemoCreator (width, height){
         <div class="w-100 d-flex justify-content-between">
             <div>
                 <button type="button" aria-label="Color"
+                        data-click="color"
                         class="btn btn-sm btn-light">
                         <i class="bi bi-three-dots-vertical"></i>
                 </button>
             </div>
             <div>
-                <button type="button" aria-label="Minimize"
-                        class="btn btn-sm btn-light">
-                        <i class="bi bi-dash-lg"></i>
+                <button type="button" aria-label="Sized"
+                        data-click="sized"
+                        class="btn btn-sm btn-light d-none">
+                        <i class="bi bi-front"></i>
                 </button>
-                <button type="button" aria-label="Remove"
+                <button type="button" aria-label="Maximize"
+                        data-click="maximize"
+                        class="btn btn-sm btn-light">
+                        <i class="bi bi-square"></i>
+                </button>
+                <button type="button" aria-label="Close"  
+                        data-click="close"
                         class="btn btn-sm btn-light">
                         <i class="bi bi-x-lg"></i>
                 </button>

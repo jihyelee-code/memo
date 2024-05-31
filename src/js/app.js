@@ -1,4 +1,5 @@
 import { DragnResize } from "./modal/dragnResize";
+import { ModalEvnt } from "./modal/modalEvnt";
 import { ModalState } from "./modal/modalState";
 import { store } from "./reducer/store";
 
@@ -39,14 +40,18 @@ Memo.prototype.createMemoHandler = function(e, _this){
         height: Number(this.size.height)
     });
 
-    //Init drag and drop functionality
+    
+
+    //Subscribe if modal attributes such as 
+    //width, height, z-index and position get changes.
+    this.mv = new ModalEvnt(elems.container);
+    this.mv.init();
+    
+    this.ms = new ModalState(elems.container);
+    this.ms.init();
     this.dragnDrop.init(elems.header);
     this.dragnResize.init(elems.container);
 
-    //Also, subscribe if modal attributes such as 
-    //width, height, z-index and position get changes.
-    this.ms = new ModalState(elems.container);
-    this.ms.init();
 
     _this.memoCnt++;
     

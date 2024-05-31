@@ -6,12 +6,10 @@
  * @returns null
  */
 
- export default function current(state = { name: "", isModal: "" }, action){
+ export default function current(state = { name: "" }, action){
     switch(action.type){
         case "current/active":
-            return { ...state, name: action.name, isModal: action.isModal };
-        case "current/reset":
-            return { ...state, name: null, isModal: false };
+            return { ...state, name: action.name };
         default:
             return state;
     }

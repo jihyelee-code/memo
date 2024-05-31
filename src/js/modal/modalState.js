@@ -60,7 +60,7 @@ export function ModalState(modalElem){
 ModalState.prototype.updateAsCurrent = function (_this){
   const zIndex = getZIndex();
   store.dispatch({ type: "modal/active", name: _this.modalName, zIndex });
-  store.dispatch({ type: "current/active", name: _this.modalName, isModal: true });
+  store.dispatch({ type: "current/active", name: _this.modalName });
 }
 
 /**
@@ -98,9 +98,11 @@ ModalState.prototype.subscribeState = function(){
 ModalState.prototype.updateModalState = function (){
   const state = store.getState();
   
-  if (!state.current.isModal) {
+  if(this.modalName !== state.current.name){
     return;
   }
+
+  console.log(state.current.name, this.modalName, state.modal)
   const update = state.modal[this.modalName];
 
   if(update.x){
@@ -126,18 +128,18 @@ ModalState.prototype.updateModalState = function (){
 }
 
 
-/**
- * @author JHLEE
- * @memberof ModalState
- * @function
- * @description Update current focused modal as none
- * @param {Event} e Event parameter
- */
-ModalState.prototype.focusOutHandler = function (e){
-    //if you use 'preventDefault' function of event param, some other function will not be triggered.
-    e.stopPropagation();
-    store.dispatch({ type: "current/active", name: null, isModal: false });
-}
+// /**
+//  * @author JHLEE
+//  * @memberof ModalState
+//  * @function
+//  * @description Update current focused modal as none
+//  * @param {Event} e Event parameter
+//  */
+// ModalState.prototype.focusOutHandler = function (e){
+//     //if you use 'preventDefault' function of event param, some other function will not be triggered.
+//     e.stopPropagation();
+//     store.dispatch({ type: "current/active", name: null, isModal: false });
+// }
 
 
 /**
@@ -153,9 +155,9 @@ ModalState.prototype.init = function (){
   this.modal.addEventListener('mousedown', e => this.zIndexHandler(e, this));
 }
 
-ModalState.prototype.initBody = function (){
-  //modal fucus out event
-  this.body.addEventListener("click", this.focusOutHandler);
+// ModalState.prototype.initBody = function (){
+//   //modal fucus out event
+//   this.body.addEventListener("click", this.focusOutHandler);
 
-}
+// }
 

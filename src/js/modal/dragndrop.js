@@ -1,5 +1,5 @@
 import { NAV_HEIGHT } from "../app";
-import { getZIndex, store } from "../reducer/store";
+import { store } from "../reducer/store";
 
 /**
  * @author JHLEE
@@ -50,7 +50,6 @@ DragnDrop.prototype.bodyEvnts = function (){
  */
 DragnDrop.prototype.mouseDownHandler = function (e){
   e.preventDefault();
-  e.stopPropagation();
   //compute current position of mouse
   const mousePositionOnModal = {
       x: e.layerX,
@@ -58,11 +57,8 @@ DragnDrop.prototype.mouseDownHandler = function (e){
   };
 
   const name = e.currentTarget.parentElement.dataset.name;
-  // console.log(name)
-  const zIndex = getZIndex();
 
-  store.dispatch({ type: "modal/active", name, zIndex });
-  store.dispatch({ type: "current/active", name, isModal: true });
+  store.dispatch({ type: "current/active", name });
   store.dispatch({
     type: "draggable/start",
     name,
@@ -92,7 +88,6 @@ DragnDrop.prototype.mouseMoveHandler = function (e){
 
   const mousePosition = draggableStatus.mousePosition;
   const name = draggableStatus.name;
-  // const computedY = e.pageY - mousePosition.y - NAV_TOP_HEIGHT;
   const computedY = e.pageY - mousePosition.y;
 
   let modalPosition = {
@@ -108,8 +103,6 @@ DragnDrop.prototype.mouseMoveHandler = function (e){
     // zIndex
   });
 
-  // this.body.addEventListener('mouseup', e => this.mouseUpHandler(e));
-  // this.body.addEventListener('mouseleave', e => this.mouseLeaveHandler(e));
 }
 
 /**

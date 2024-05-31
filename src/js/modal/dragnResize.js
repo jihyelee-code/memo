@@ -1,5 +1,4 @@
-import { NAV_HEIGHT } from "../app";
-import { getZIndex, store } from "../reducer/store";
+import { store } from "../reducer/store";
 
 export function DragnResize(width = 200, height = 230){
     this.CORNER_RESIZER = {
@@ -13,18 +12,10 @@ export function DragnResize(width = 200, height = 230){
         BOTTOM_RIGHT : "bottom-right",
     };
 
-    this.COLUMN_RESIZER = "resizer-column";
-    this.WIDTH_RESIZER = "resizer-width";
-    
     this.modalMinimumSize = {
         width: Number(width),
         height: Number(height),
     };
-
-    //minimum height of workinglist
-    this.minimumHeight = 120;
-    
-    this.navTop_height = NAV_HEIGHT;
 
     /**
     * @author JHLEE
@@ -35,10 +26,6 @@ export function DragnResize(width = 200, height = 230){
     this.body = document.querySelector('body');
 
     this.modal = null;
-    // this.modal = modal && modal;
-    // this.modalHeader = modal && modal.querySelector('[name="modal-header"]');
-    // this.modalName = this.modalHeader ? this.modalHeader.dataset.name : null;
-
 }
 
 
@@ -51,7 +38,6 @@ export function DragnResize(width = 200, height = 230){
  * @return {DragnResize}
  */
 DragnResize.prototype.init = function (modal){
-
     this.modal = modal;
 
     //mouse down resize click start event to handle modal resize
@@ -71,7 +57,6 @@ DragnResize.prototype.init = function (modal){
 
 DragnResize.prototype.resizeClickStartHandler = function (e, _this){
     e.preventDefault();
-    // e.stopPropagation();
     const resizeTrigger = e.currentTarget;
     const resizeTriggerName = resizeTrigger.parentElement.parentElement.dataset.name;
     const resizeTriggerProp = resizeTrigger.getAttribute("corner");
@@ -81,13 +66,12 @@ DragnResize.prototype.resizeClickStartHandler = function (e, _this){
         y: e.pageY
     };
 
-
     _this.updateAsCurrent(resizeTriggerName, mousePosition, resizeTriggerProp);
 
 }
 
 DragnResize.prototype.updateAsCurrent = function(name, mousePosition, resizeTriggerProp){
-    store.dispatch({ type: "current/active", name, isModal: true });
+    store.dispatch({ type: "current/active", name });
     store.dispatch({ type: "resize/start", name, mousePosition, resizeTriggerProp});
 
     return this;
@@ -108,7 +92,6 @@ DragnResize.prototype.resizedModalInfo = function (){
 }
 
 DragnResize.prototype.resizedModalSize = function (){
-    // return baser.modalList.getList()[this.resizeInfo().name].getResizer().modalMinimumSize;
     return this.modalMinimumSize;
 }
 
@@ -170,10 +153,7 @@ DragnResize.prototype.getWidthFromPositionedModal = function(mousePositionX) {
  * @param {number} mousePositionY - e.pageY which is the mouse y position
  */
  DragnResize.prototype.getHeightFromUnpositionedModal = function(mousePositionY){
-    // let height = (this.getOriginPosition().y + this.getOriginSize().height) - mousePositionY + Number(this.navTop_height);
-    // console.log('origin pos.y: ', this.getOriginPosition().y, this.getOriginSize().height, mousePositionY);
     let height = (this.getOriginPosition().y + this.getOriginSize().height) - mousePositionY;
-    // console.log('height: ', height)
     return height;
 }
 
@@ -182,7 +162,6 @@ DragnResize.prototype.getWidthFromPositionedModal = function(mousePositionX) {
 * @param {number} mousePositionY - e.pageY which is the mouse y position
 */
 DragnResize.prototype.getHeightFromPositionedModal = function(mousePositionY){
-    // let height = mousePositionY - this.getOriginPosition().y - Number(this.navTop_height);
     let height = mousePositionY - this.getOriginPosition().y;
     return height;
 }
@@ -248,7 +227,6 @@ DragnResize.prototype.setPositionWithMouseY = function(mousePositionY){
     //set new position
     let position = {
         x: this.getOriginPosition().x,
-        // y: mousePositionY - Number(this.navTop_height),
         y: mousePositionY,
     };
     return position;
@@ -282,10 +260,6 @@ DragnResize.prototype.checkIfMinimumHeight = function(height){
     //which part triggered from modal
     let resizeTriggerProp = this.resizeInfo().resizeTriggerProp; 
 
-    let isMinWidth = this.getOriginSize().width === this.resizedModalSize().width;
-    let isMinHeight = this.getOriginSize().height === this.resizedModalSize().height;
-    // console.log(isMinWidth, this.checkIfMinimumWidth())
-
     let isWidthNarrow = false;
     let isHeightShort = false;
 
@@ -296,13 +270,6 @@ DragnResize.prototype.checkIfMinimumHeight = function(height){
 
     switch(resizeTriggerProp){
         case this.CORNER_RESIZER.LEFT:
-            //when it's minimum width && mouse is inside of the modal => wait until mouse come back on right position
-            // console.log(this.getOriginSize().width, this.resizedModalSize().width)
-            
-            // if (isMinWidth && (mousePositionX > this.getOriginPosition().x)) { 
-            //     return; 
-            // }
-
             width = this.getWidthFromUnpositionedModal(mousePositionX);
             size = this.setSizeWithWidth(width);
             
@@ -319,10 +286,6 @@ DragnResize.prototype.checkIfMinimumHeight = function(height){
             break;
         case this.CORNER_RESIZER.RIGHT:
             
-            //when it's minimum width && mouse is inside of the modal => wait until mouse come back on right position
-            // if (isMinWidth && (mousePositionX < this.getOriginPosition().x + this.resizedModalSize().width)) {
-                //     return;
-                // }
             width = this.getWidthFromPositionedModal(mousePositionX);
             size = this.setSizeWithWidth(width);
 
@@ -337,9 +300,6 @@ DragnResize.prototype.checkIfMinimumHeight = function(height){
 
             break;
         case this.CORNER_RESIZER.BOTTOM:
-            
-            //check mouse position when the height is minimum
-            // if (isMinHeight && (mousePositionY < (this.getOriginPosition().y + this.resizedModalSize().height))) { return; }
             
             height = this.getHeightFromPositionedModal(mousePositionY);
             size = this.setSizeWithHeight(height);
@@ -357,11 +317,6 @@ DragnResize.prototype.checkIfMinimumHeight = function(height){
 
             break;
         case this.CORNER_RESIZER.TOP:
-            
-            //check mouse position when the height is minimum
-            // if (isMinHeight && (mousePositionY > getOriginPosition().y + getNavTopHeight())) { return; }
-            // if (isMinHeight && (mousePositionY > this.getOriginPosition().y)) { return; }
-            
             //get new height
             height = this.getHeightFromUnpositionedModal(mousePositionY);
             size = this.setSizeWithHeight(height);
@@ -384,12 +339,9 @@ DragnResize.prototype.checkIfMinimumHeight = function(height){
             //set new position
             position = {
                 x: this.getOriginPosition().x,
-                // y: mousePositionY - Number(this.navTop_height),
                 y: mousePositionY,
             }
               //check modal size
-            //   isWidthNarrow = width < this.resizedModalSize().width;
-            //   isHeightShort = height < this.resizedModalSize().height;
             isWidthNarrow = this.checkIfMinimumWidth(width);
             isHeightShort = this.checkIfMinimumHeight(height);
             
@@ -428,7 +380,6 @@ DragnResize.prototype.checkIfMinimumHeight = function(height){
             height = this.getHeightFromUnpositionedModal(mousePositionY);
             position = {
                 x: mousePositionX,
-                // y: mousePositionY - Number(this.navTop_height),
                 y: mousePositionY,
             }
             //check modal size
@@ -562,13 +513,11 @@ DragnResize.prototype.getOriginSize = function(){
  * send redux store the size of the modal
  */
  DragnResize.prototype.updateModalSize = function(size){
-    const zIndex = this.resizedModalInfo().zIndex;
     store.dispatch({ 
         type: "modal/size", 
         name: this.resizeInfo().name, 
         width: size.width, 
-        height: size.height, 
-        zIndex 
+        height: size.height
     });
 }
 

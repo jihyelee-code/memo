@@ -11,7 +11,6 @@ export let store = configureStore({
         draggable,
         current,
         resizer,
-        // heightResizer
     }
 });
 
