@@ -33,8 +33,8 @@ export function MemoCreator (width, height){
                 </button>
             </div>
             <div>
-                <button type="button" aria-label="Sized"
-                        data-click="sized"
+                <button type="button" aria-label="Restore"
+                        data-click="restore"
                         class="btn btn-sm btn-light d-none">
                         <i class="bi bi-front"></i>
                 </button>

@@ -8,9 +8,9 @@ import { getZIndex, store } from "../reducer/store";
  */
 export function ModalEvnt(){
   // this.ROLE_CLOSE = '[data-role="close"]';
-  this.EVNT_CLICK = {
+  this.BTN_CLICK = {
     COLOR: '[data-click="color"]',
-    SIZED: '[data-click="sized"]',
+    RESTORE: '[data-click="restore"]',
     MAXIMIZE: '[data-click="maximize"]',
     CLOSE: '[data-click="close"]'
   };
@@ -18,11 +18,31 @@ export function ModalEvnt(){
 }
 
 ModalEvnt.prototype.maximizeEvent = function (modal){
-    const btn = modal.querySelector(this.EVNT_CLICK.MAXIMIZE);
-    btn.addEventListener('click', e => {
+    const maxBtn = modal.querySelector(this.BTN_CLICK.MAXIMIZE);
+    maxBtn.addEventListener('click', e => {
       e.preventDefault();
 
+      const parent = maxBtn.parentElement;
+      const restrBtn = parent.querySelector(this.BTN_CLICK.RESTORE);
+      restrBtn.classList.remove('d-none');
+      maxBtn.classList.add('d-none');
+
       store.dispatch({ type: "modal/maximize", name: modal.dataset.name });
+      
+    })
+}
+
+ModalEvnt.prototype.restoreEvent = function (modal){
+    const restrBtn = modal.querySelector(this.BTN_CLICK.RESTORE);
+    restrBtn.addEventListener('click', e => {
+      e.preventDefault();
+
+      const parent = restrBtn.parentElement;
+      const maxBtn = parent.querySelector(this.BTN_CLICK.MAXIMIZE);
+      maxBtn.classList.remove('d-none');
+      restrBtn.classList.add('d-none');
+
+      store.dispatch({ type: "modal/restore", name: modal.dataset.name });
       
     })
 }
@@ -34,7 +54,7 @@ ModalEvnt.prototype.maximizeEvent = function (modal){
  * @description Modal close event function. Define  what would do after user clicks 'close' button on the modal.
  */
 ModalEvnt.prototype.closeEvent = function (modal, unsubscribe){
-    const btn = modal.querySelector(this.EVNT_CLICK.CLOSE);
+    const btn = modal.querySelector(this.BTN_CLICK.CLOSE);
     btn.addEventListener('click', e => {
       e.preventDefault();
 
@@ -87,4 +107,5 @@ ModalEvnt.prototype.init = function (modal, unsubscribe){
     this.zIndexEvent(modal);
     this.closeEvent(modal, unsubscribe);
     this.maximizeEvent(modal);
+    this.restoreEvent(modal);
 }

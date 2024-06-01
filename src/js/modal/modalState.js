@@ -14,14 +14,10 @@ export function ModalState(modal){
   this.modalName = modal.dataset.name;
   this.unsubscribe = null;
   this.origin = {
-    size: {
-      width: 0,
-      height: 0
-    },
-    position: {
-      x: 0,
-      y: 0
-    }
+    width: 0,
+    height: 0,
+    x: 0,
+    y: 0
   };
 
 }
@@ -46,15 +42,28 @@ ModalState.prototype.updateModalState = function (){
 
   //in case of maximize, save the current information of the modal
   if(typeof update.width === "string" && typeof update.height === "string"){
-    this.origin.width = this.modal.style.width;
-    this.origin.height = this.modal.style.height;
-    this.origin.x = this.modal.style.left;
-    this.origin.y = this.modal.style.top;
+    if(update.width === "100%" && update.height === "100%"){
+      //saving
+      this.origin.width = Number(this.modal.style.width.match(/\d+/g)[0]);
+      this.origin.height = Number(this.modal.style.height.match(/\d+/g)[0]);
+      this.origin.x = Number(this.modal.style.left.match(/\d+/g)[0]);
+      this.origin.y = Number(this.modal.style.top.match(/\d+/g)[0]);
+  
+      console.log('saving: ', this.modal.style.width, this.modal.style.height )
+      //setting
+      this.modal.style.width = "100%";
+      this.modal.style.height = "100%";
+      this.modal.style.left = 0;
+      this.modal.style.top = 0;
 
-    this.modal.style.width = update.width;
-    this.modal.style.height = update.height;
-    this.modal.style.left = 0;
-    this.modal.style.top = 0;
+    }else{
+      console.log(this.origin)
+      // this.modal.style.width = `${this.origin.width}px`;
+      // this.modal.style.height = `${this.origin.height}px`;
+      // this.modal.style.left = `${this.origin.x}px`;
+      // this.modal.style.top = `${this.origin.y}px`;
+    }
+
     return;
   }
 

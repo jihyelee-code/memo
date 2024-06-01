@@ -24,6 +24,13 @@ export default function modal(state = {}, action) {
                     y: 0 
                 } };
 
+        case "modal/restore":
+            return { ...state, 
+                [action.name]: { 
+                    ...state[action.name], 
+                    width: "restore",
+                    height: "restore", 
+                } };
         case "modal/position":
             return { ...state, 
                 [action.name]: { 
