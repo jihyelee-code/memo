@@ -1,6 +1,6 @@
 import tippy from "tippy.js";
 import 'tippy.js/dist/tippy.css';
-import { getZIndex, store } from "../reducer/store";
+import { store } from "../reducer/store";
 
 /**
  * @author JHLEE
@@ -8,82 +8,22 @@ import { getZIndex, store } from "../reducer/store";
  * @constructor
  * @classdesc
  */
-export function ModalState(modalElem){
-  // this.ROLE_CLOSE = '[data-role="close"]';
+export function ModalState(modal){
   this.body = document.querySelector('body');
-  this.modal = modalElem;
-  this.modalName = modalElem.dataset.name;
-}
+  this.modal = modal;
+  this.modalName = modal.dataset.name;
+  this.unsubscribe = null;
+  this.origin = {
+    size: {
+      width: 0,
+      height: 0
+    },
+    position: {
+      x: 0,
+      y: 0
+    }
+  };
 
-/**
- * @author JHLEE
- * @memberof ModalState
- * @function
- * @description Modal close event function. Define  what would do after user clicks 'close' button on the modal.
- */
-// ModalState.prototype.setCloseEvent = function (callback, isReadOnly = false){
-//   const closeBtns =  this.modal.querySelectorAll(this.ROLE_CLOSE);
-//   closeBtns.forEach(btn => {
-//     btn.addEventListener('click', e => {
-//       e.preventDefault();
-//       e.stopPropagation();
-
-//       const common = baser.common;
-//       common.deactive(this.modal);
-
-//       //reset error alert
-//       this.removeErrorEffect();
-
-//       if(this.datastore && !isReadOnly){
-//         //set html values with data store data
-//         this.setInputValues();
-//         this.deactiveApplyBtn && this.deactiveApplyBtn();
-//         this.deactiveConfirmBtn();
-//       }
-
-//       callback && callback();
-
-//       store.dispatch({ type: "current/reset"});
-//       store.dispatch({ type: "modal/deactivate", name: this.modalName });
-
-//     })
-//   })
-// }
-
-
-/**
- * @author JHLEE
- * @memberof ModalState
- * @function
- * @description Update current modal information.
- */
-ModalState.prototype.updateAsCurrent = function (_this){
-  const zIndex = getZIndex();
-  store.dispatch({ type: "modal/active", name: _this.modalName, zIndex });
-  store.dispatch({ type: "current/active", name: _this.modalName });
-}
-
-/**
- * @author JHLEE
- * @memberof ModalState
- * @function
- * @description Update current clicked modal's z-index.
- */
-ModalState.prototype.zIndexHandler = function(e, _this){
-    e.stopPropagation();
-    _this.updateAsCurrent(_this);
-}
-
-/**
- * @author JHLEE
- * @memberof ModalState
- * @function
- * @description Subscribe modal's status
- */
-ModalState.prototype.subscribeState = function(){
-  store.subscribe( () => {
-    this.updateModalState();
-  });
 }
 
 
@@ -102,21 +42,22 @@ ModalState.prototype.updateModalState = function (){
     return;
   }
 
-  console.log(state.current.name, this.modalName, state.modal)
   const update = state.modal[this.modalName];
 
-  if(update.x){
-    this.modal.style.left = `${update.x}px`;
+  //in case of maximize, save the current information of the modal
+  if(typeof update.width === "string" && typeof update.height === "string"){
+    this.origin.width = this.modal.style.width;
+    this.origin.height = this.modal.style.height;
+    this.origin.x = this.modal.style.left;
+    this.origin.y = this.modal.style.top;
+
+    this.modal.style.width = update.width;
+    this.modal.style.height = update.height;
+    this.modal.style.left = 0;
+    this.modal.style.top = 0;
+    return;
   }
 
-  if(update.y){
-    this.modal.style.top = `${update.y}px`;
-  }
-
-  if(update.zIndex){
-    this.modal.style.zIndex = update.zIndex;
-  }
-  
   if(update.width){
     this.modal.style.width = `${update.width}px`;
   }
@@ -124,40 +65,32 @@ ModalState.prototype.updateModalState = function (){
   if(update.height){
     this.modal.style.height = `${update.height}px`;
   }
-   
+
+  if(update.x || update.x === 0){
+    this.modal.style.left = `${update.x}px`;
+  }
+
+  if(update.y || update.y === 0){
+    this.modal.style.top = `${update.y}px`;
+  }
+
+  if(update.zIndex){
+    this.modal.style.zIndex = update.zIndex;
+  }
+  
 }
-
-
-// /**
-//  * @author JHLEE
-//  * @memberof ModalState
-//  * @function
-//  * @description Update current focused modal as none
-//  * @param {Event} e Event parameter
-//  */
-// ModalState.prototype.focusOutHandler = function (e){
-//     //if you use 'preventDefault' function of event param, some other function will not be triggered.
-//     e.stopPropagation();
-//     store.dispatch({ type: "current/active", name: null, isModal: false });
-// }
 
 
 /**
  * @author JHLEE
  * @memberof ModalState
  * @function
- * @description Initialize all the modal events
+ * @description 
  */
 ModalState.prototype.init = function (){
-  this.subscribeState();
-  this.updateAsCurrent(this);
-  //z index event
-  this.modal.addEventListener('mousedown', e => this.zIndexHandler(e, this));
+  this.unsubscribe = store.subscribe( () => {
+    this.updateModalState();
+  });
+
+  return this.unsubscribe;
 }
-
-// ModalState.prototype.initBody = function (){
-//   //modal fucus out event
-//   this.body.addEventListener("click", this.focusOutHandler);
-
-// }
-

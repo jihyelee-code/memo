@@ -1,5 +1,3 @@
-import { NAV_HEIGHT } from "../app";
-
 /**
  * @author JHLEE
  * @class MemoCreator
@@ -117,7 +115,7 @@ MemoCreator.prototype.init = function (){
 
     container.style.width = this.defSetting.width;
     container.style.height = this.defSetting.height;
-    container.style.top = `${this.defSetting.top + NAV_HEIGHT + getRandomInt(this.defSetting.randomPosRange)}px`;
+    container.style.top = `${this.defSetting.top + getRandomInt(this.defSetting.randomPosRange)}px`;
     container.style.left = `${this.defSetting.left + getRandomInt(this.defSetting.randomPosRange)}px`; 
 
     container.appendChild(header);

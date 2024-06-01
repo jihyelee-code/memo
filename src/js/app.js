@@ -18,6 +18,7 @@ function Memo (){
     };
     this.dragnDrop = null;
     this.dragnResize = null;
+    this.mv = null;
 }
 
 
@@ -44,11 +45,9 @@ Memo.prototype.createMemoHandler = function(e, _this){
 
     //Subscribe if modal attributes such as 
     //width, height, z-index and position get changes.
-    this.mv = new ModalEvnt(elems.container);
-    this.mv.init();
-    
     this.ms = new ModalState(elems.container);
-    this.ms.init();
+    const unsubscribe = this.ms.init();
+    this.mv.init(elems.container, unsubscribe);
     this.dragnDrop.init(elems.header);
     this.dragnResize.init(elems.container);
 
@@ -67,6 +66,9 @@ Memo.prototype.init = function(){
 
     this.dragnResize = new DragnResize(this.size.width, this.size.height);
     this.dragnResize.subscribe();
+
+    this.mv = new ModalEvnt();
+
 }
 
 const memo = new Memo();
