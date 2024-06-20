@@ -91,11 +91,6 @@ DragnResize.prototype.resizedModalInfo = function (){
     return this.getModal()[this.resizeInfo().name];
 }
 
-DragnResize.prototype.resizedModalSize = function (){
-    return this.modalMinimumSize;
-}
-
-
 /**
  * Get the status of resize
  */
@@ -238,7 +233,7 @@ DragnResize.prototype.setPositionWithMouseY = function(mousePositionY){
  */
 DragnResize.prototype.checkIfMinimumWidth = function(width){
     
-    return (width < this.resizedModalSize().width) ? true : false;
+    return (width < this.modalMinimumSize.width) ? true : false;
 }
 
 /**
@@ -246,7 +241,7 @@ DragnResize.prototype.checkIfMinimumWidth = function(width){
  * @param {number} height - resized height
  */
 DragnResize.prototype.checkIfMinimumHeight = function(height){
-    return (height < this.resizedModalSize().height) ? true : false;
+    return (height < this.modalMinimumSize.height) ? true : false;
 }
 
 
@@ -355,7 +350,7 @@ DragnResize.prototype.checkIfMinimumHeight = function(height){
             this.body.style.cursor = "nesw-resize";
 
             if (isWidthNarrow && !isHeightShort) {
-                width = this.resizedModalSize().width;
+                width = this.modalMinimumSize.width;
 
             } else if (!isWidthNarrow && isHeightShort) {
                 size = {
@@ -431,9 +426,9 @@ DragnResize.prototype.checkIfMinimumHeight = function(height){
             this.body.style.cursor = "nwse-resize";
             this.body.classList.remove('not-allowed');
         
-            this.checkIfMinimumWidth(width) && (width = this.resizedModalSize().width);
+            this.checkIfMinimumWidth(width) && (width = this.modalMinimumSize.width);
 
-            this.checkIfMinimumHeight(height) && (height = this.resizedModalSize().height);
+            this.checkIfMinimumHeight(height) && (height = this.modalMinimumSize.height);
 
             size = {
                 width,
@@ -506,7 +501,7 @@ DragnResize.prototype.getModal = function(){
  */
 DragnResize.prototype.getOriginSize = function(){
     const modal = this.resizedModalInfo();
-    return { width: parseFloat(modal.width), height: parseFloat(modal.height) };
+    return { width: parseFloat(modal.width.match(/\d+/g)[0]), height: parseFloat(modal.height.match(/\d+/g)[0]) };
 }
 
 /**
@@ -516,8 +511,8 @@ DragnResize.prototype.getOriginSize = function(){
     store.dispatch({ 
         type: "modal/size", 
         name: this.resizeInfo().name, 
-        width: size.width, 
-        height: size.height
+        width: `${size.width}px`, 
+        height: `${size.height}px`
     });
 }
 
@@ -530,10 +525,10 @@ DragnResize.prototype.updateModal = function(size, position) {
     store.dispatch({ 
         type: "modal/update", 
         name: this.resizeInfo().name, 
-        x: position.x, 
-        y: position.y, 
-        width: size.width, 
-        height: size.height 
+        x: `${position.x}px`, 
+        y: `${position.y}px`, 
+        width: `${size.width}px`, 
+        height: `${size.height}px` 
     });
 }
 
@@ -543,7 +538,7 @@ DragnResize.prototype.updateModal = function(size, position) {
  */
 DragnResize.prototype.getOriginPosition = function(){
     const modal = this.resizedModalInfo();
-    return { x: parseFloat(modal.x), y: parseFloat(modal.y) };
+    return { x: parseFloat(modal.x.match(/\d+/g)[0]), y: parseFloat(modal.y.match(/\d+/g)[0]) };
 }
 
 

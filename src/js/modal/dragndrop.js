@@ -99,8 +99,8 @@ DragnDrop.prototype.mouseMoveHandler = function (e){
   store.dispatch({
     type: "modal/position",
     name,
-    x: modalPosition.x,
-    y: modalPosition.y,
+    x: `${modalPosition.x}px`,
+    y: `${modalPosition.y}px`,
     // zIndex
   });
 
