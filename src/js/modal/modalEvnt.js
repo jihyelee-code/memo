@@ -19,10 +19,10 @@ export function ModalEvnt(modal){
   this.modalName = modal.dataset.name;
   this.unsubscribe = null;
   this.originInfo = {
-    width: 0,
-    height: 0,
-    x: 0,
-    y: 0
+    width: "0px",
+    height: "0px",
+    x: "0px",
+    y: "0px"
   };
 
 }
@@ -150,22 +150,18 @@ ModalEvnt.prototype.updateModalState = function (){
   const info = state.modal[this.modalName];
 
   if(info.width){
-    // this.modal.style.width = `${info.width}px`;
     this.modal.style.width = info.width;
   }
 
   if(info.height){
-    // this.modal.style.height = `${info.height}px`;
     this.modal.style.height = info.height;
   }
 
-  if(info.x || info.x === 0){
-    // this.modal.style.left = `${info.x}px`;
+  if(info.x){
     this.modal.style.left = info.x;
   }
 
-  if(info.y || info.y === 0){
-    // this.modal.style.top = `${info.y}px`;
+  if(info.y){
     this.modal.style.top = info.y;
   }
 

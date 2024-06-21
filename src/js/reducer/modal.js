@@ -1,3 +1,4 @@
+import { NAV_HEIGHT } from "../app";
 
 export default function modal(state = {}, action) {
     // z = z+1;
@@ -19,9 +20,9 @@ export default function modal(state = {}, action) {
                 [action.name]: { 
                     ...state[action.name], 
                     width: "100%",
-                    height: "100%", 
-                    x: 0, 
-                    y: 0 
+                    height: `calc(100% - ${NAV_HEIGHT}px)`, 
+                    x: `0px`, 
+                    y: `${NAV_HEIGHT}px` 
                 } };
 
         // case "modal/restore":
@@ -35,8 +36,8 @@ export default function modal(state = {}, action) {
             return { ...state, 
                 [action.name]: { 
                     ...state[action.name], 
-                    x: action.x ? action.x : 0, 
-                    y: action.y ? action.y : 0 
+                    x: action.x ? action.x : "0px", 
+                    y: action.y ? action.y : "0px" 
                 } };
 
         case "modal/size":
