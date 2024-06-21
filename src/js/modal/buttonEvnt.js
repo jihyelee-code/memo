@@ -2,11 +2,11 @@ import { getZIndex, store } from "../reducer/store";
 
 /**
  * @author JHLEE
- * @class ModalEvnt
+ * @class ButtonEvnt
  * @constructor
  * @classdesc
  */
-export function ModalEvnt(modal){
+export function ButtonEvnt(modal){
   // this.ROLE_CLOSE = '[data-role="close"]';
   this.BTN_CLICK = {
     COLOR: '[data-click="color"]',
@@ -27,7 +27,7 @@ export function ModalEvnt(modal){
 
 }
 
-ModalEvnt.prototype.maximizeEvent = function (){
+ButtonEvnt.prototype.maximizeEvent = function (){
     const maxBtn = this.modal.querySelector(this.BTN_CLICK.MAXIMIZE);
     maxBtn.addEventListener('click', e => {
       e.preventDefault();
@@ -52,7 +52,7 @@ ModalEvnt.prototype.maximizeEvent = function (){
     })
 }
 
-ModalEvnt.prototype.restoreEvent = function (){
+ButtonEvnt.prototype.restoreEvent = function (){
     const restrBtn = this.modal.querySelector(this.BTN_CLICK.RESTORE);
     restrBtn.addEventListener('click', e => {
       e.preventDefault();
@@ -78,11 +78,11 @@ ModalEvnt.prototype.restoreEvent = function (){
 
 /**
  * @author JHLEE
- * @memberof ModalEvnt
+ * @memberof ButtonEvnt
  * @function
  * @description Modal close event function. Define  what would do after user clicks 'close' button on the modal.
  */
-ModalEvnt.prototype.closeEvent = function (){
+ButtonEvnt.prototype.closeEvent = function (){
     const btn = this.modal.querySelector(this.BTN_CLICK.CLOSE);
     btn.addEventListener('click', e => {
       e.preventDefault();
@@ -105,11 +105,11 @@ ModalEvnt.prototype.closeEvent = function (){
 
 /**
  * @author JHLEE
- * @memberof ModalEvnt
+ * @memberof ButtonEvnt
  * @function
  * @description 
  */
-ModalEvnt.prototype.zIndexEvent = function (){
+ButtonEvnt.prototype.zIndexEvent = function (){
     this.modal.addEventListener('mousedown', e => {
         e.stopPropagation();
         this.updateAsCurrent();
@@ -118,11 +118,11 @@ ModalEvnt.prototype.zIndexEvent = function (){
 
 /**
  * @author JHLEE
- * @memberof ModalEvnt
+ * @memberof ButtonEvnt
  * @function
  * @description Update current modal information.
  */
-ModalEvnt.prototype.updateAsCurrent = function (){
+ButtonEvnt.prototype.updateAsCurrent = function (){
     const zIndex = getZIndex();
     store.dispatch({ type: "modal/active", name: this.modalName, zIndex });
     store.dispatch({ type: "current/active", name: this.modalName });
@@ -134,13 +134,13 @@ ModalEvnt.prototype.updateAsCurrent = function (){
 
 /**
  * @author JHLEE
- * @memberof ModalEvnt
+ * @memberof ButtonEvnt
  * @function
  * @description Update modal information by subscribing it
  * @param {Element} modal Target modal
  * @param {string} name The name of the modal
  */
-ModalEvnt.prototype.updateModalState = function (){
+ButtonEvnt.prototype.updateModalState = function (){
   const state = store.getState();
 
   if(this.modalName !== state.current.name){
@@ -173,11 +173,11 @@ ModalEvnt.prototype.updateModalState = function (){
 
   /**
  * @author JHLEE
- * @memberof ModalEvnt
+ * @memberof ButtonEvnt
  * @function
  * @description 
  */
-  ModalEvnt.prototype.subscribe = function (){
+  ButtonEvnt.prototype.subscribe = function (){
   this.unsubscribe = store.subscribe( () => {
     this.updateModalState();
   });
@@ -188,12 +188,12 @@ ModalEvnt.prototype.updateModalState = function (){
 
 /**
  * @author JHLEE
- * @memberof ModalEvnt
+ * @memberof ButtonEvnt
  * @function
  * @description Initialize all the modal events
  */
-// ModalEvnt.prototype.init = function (modal, unsubscribe){
-ModalEvnt.prototype.init = function (){
+// ButtonEvnt.prototype.init = function (modal, unsubscribe){
+ButtonEvnt.prototype.init = function (){
   this.subscribe();
   this.updateAsCurrent();
   this.zIndexEvent();

@@ -1,5 +1,5 @@
 import { DragnResize } from "./modal/dragnResize";
-import { ModalEvnt } from "./modal/modalEvnt";
+import { ButtonEvnt } from "./modal/buttonEvnt";
 import { store } from "./reducer/store";
 
 const { MemoCreator } = require("./creator/memoCreator");
@@ -44,7 +44,7 @@ Memo.prototype.createMemoHandler = function(e, _this){
 
     //Subscribe if modal attributes such as 
     //width, height, z-index and position get changes.
-    const mv = new ModalEvnt(elems.container);
+    const mv = new ButtonEvnt(elems.container);
     mv.init();
     this.dragnDrop.init(elems.header);
     this.dragnResize.init(elems.container);
