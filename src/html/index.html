@@ -7,8 +7,9 @@
     <title>Memo</title>
 </head>
 <body class="vh-100">
-    <div class="container-fluid h-100 d-flex flex-column">
-        <nav style="height: 50px;" class="w-100 d-flex justify-content-center align-items-center">
+    <div class="container-fluid h-100">
+        <nav style="height: 50px; z-index: 1; left:0;" 
+             class="bg-primary w-100 position-absolute d-flex justify-content-center align-items-center">
             <div class="d-flex justify-content-center">
                 <button type="button" aria-label="Add" evnt="addMemo" 
                         class="btn btn-sm btn-light">
@@ -17,7 +18,7 @@
                 </button> 
             </div>
         </nav>
-        <main class="w-100 flex-grow-1 position-relative" id="wall">
+        <main class="w-100 position-absolute" style="z-index:0;" id="wall">
         </main>
     </div>
 </body>

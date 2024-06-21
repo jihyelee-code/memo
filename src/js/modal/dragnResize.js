@@ -1,6 +1,7 @@
+import { NAV_HEIGHT } from "../app";
 import { store } from "../reducer/store";
 
-export function DragnResize(width = 200, height = 230){
+export function DragnResize(width = "200px", height = "230px"){
     this.CORNER_RESIZER = {
         LEFT : "left",
         TOP : "top",
@@ -13,8 +14,8 @@ export function DragnResize(width = 200, height = 230){
     };
 
     this.modalMinimumSize = {
-        width: Number(width),
-        height: Number(height),
+        width: Number(width.match(/\d+/g)[0]),
+        height: Number(height.match(/\d+/g)[0]),
     };
 
     /**
@@ -149,6 +150,8 @@ DragnResize.prototype.getWidthFromPositionedModal = function(mousePositionX) {
  */
  DragnResize.prototype.getHeightFromUnpositionedModal = function(mousePositionY){
     let height = (this.getOriginPosition().y + this.getOriginSize().height) - mousePositionY;
+
+
     return height;
 }
 
@@ -201,32 +204,6 @@ DragnResize.prototype.setSizeWithHeight = function(height){
     return size;
 };
 
-
-/**
-* set modal x position with mouse x position
-* @param {number} mousePositionX - changed x position
-*/
-DragnResize.prototype.setPositionWithMouseX = function(mousePositionX){
-    let position = {
-        x: mousePositionX,
-        y: this.getOriginPosition().y
-    };
-    return position;
-}
-
-/**
-* set modal y position with mouse y position
-* @param {number} mousePositionY - changed y position
-*/
-DragnResize.prototype.setPositionWithMouseY = function(mousePositionY){
-    //set new position
-    let position = {
-        x: this.getOriginPosition().x,
-        y: mousePositionY,
-    };
-    return position;
-}
-
 /**
  * check if resized width is narrower than the width of minimum size
  * @param {number} width - resized width
@@ -252,6 +229,12 @@ DragnResize.prototype.checkIfMinimumHeight = function(height){
  DragnResize.prototype.resizeModal = function(e){
     let mousePositionX = e.pageX;
     let mousePositionY = e.pageY;
+
+    //if mouse is on the statusbar, do nothing
+    if(mousePositionY < NAV_HEIGHT){
+        return;
+    }
+
     //which part triggered from modal
     let resizeTriggerProp = this.resizeInfo().resizeTriggerProp; 
 
@@ -270,12 +253,12 @@ DragnResize.prototype.checkIfMinimumHeight = function(height){
             
             if (size) {
                 this.body.style.cursor = "ew-resize";
-                position = this.setPositionWithMouseX(mousePositionX);
+                position = {
+                    x: mousePositionX,
+                    y: this.getOriginPosition().y
+                };
+
                 this.updateModal(size, position, this);
-                this.body.classList.remove('not-allowed');
-            }else{
-                // this.body.style.cursor = "not-allowed";
-                this.body.classList.add('not-allowed');
             }
 
             break;
@@ -285,12 +268,8 @@ DragnResize.prototype.checkIfMinimumHeight = function(height){
             size = this.setSizeWithWidth(width);
 
             if(size){
-                // size && this.updateModalSize(size);
                 this.updateModalSize(size);
                 this.body.style.cursor = "ew-resize";
-                this.body.classList.remove('not-allowed');
-            }else{
-                this.body.classList.add('not-allowed');
             }
 
             break;
@@ -302,27 +281,24 @@ DragnResize.prototype.checkIfMinimumHeight = function(height){
             if(size){
                 this.body.style.cursor = "ns-resize";
                 this.updateModalSize(size);
-                this.body.classList.remove('not-allowed');
 
-            }else{
-                this.body.classList.add('not-allowed');
-                
             }
-            // size && this.updateModalSize(size);
 
             break;
         case this.CORNER_RESIZER.TOP:
             //get new height
+
             height = this.getHeightFromUnpositionedModal(mousePositionY);
             size = this.setSizeWithHeight(height);
             
             if (size) {
-                position = this.setPositionWithMouseY(mousePositionY);
+                position = {
+                    x: this.getOriginPosition().x,
+                    y: mousePositionY,
+                };
+
                 this.updateModal(size, position, this);
                 this.body.style.cursor = "ns-resize";
-                this.body.classList.remove('not-allowed');
-            }else{
-                this.body.classList.add('not-allowed');
             }
 
             break;
@@ -341,12 +317,9 @@ DragnResize.prototype.checkIfMinimumHeight = function(height){
             isHeightShort = this.checkIfMinimumHeight(height);
             
             if (isWidthNarrow && isHeightShort) {
-                // this.body.style.cursor = "not-allowed";
-                this.body.classList.add('not-allowed');
                 return;
             } 
 
-            this.body.classList.remove('not-allowed');
             this.body.style.cursor = "nesw-resize";
 
             if (isWidthNarrow && !isHeightShort) {
@@ -375,17 +348,16 @@ DragnResize.prototype.checkIfMinimumHeight = function(height){
             height = this.getHeightFromUnpositionedModal(mousePositionY);
             position = {
                 x: mousePositionX,
-                y: mousePositionY,
+                y: mousePositionY
+                // y: mousePositionY < NAV_HEIGHT ? NAV_HEIGHT : mousePositionY,
             }
             //check modal size
             isWidthNarrow = this.checkIfMinimumWidth(width);
             isHeightShort = this.checkIfMinimumHeight(height);
             if (isWidthNarrow && isHeightShort) {
-                this.body.classList.add('not-allowed');
                 return;
             }
             
-            this.body.classList.remove('not-allowed');
             this.body.style.cursor = "nwse-resize";
 
             if (isWidthNarrow && !isHeightShort) {
@@ -419,15 +391,12 @@ DragnResize.prototype.checkIfMinimumHeight = function(height){
             isHeightShort = this.checkIfMinimumHeight(height);
             
             if (isWidthNarrow && isHeightShort) {
-                this.body.classList.add('not-allowed');
                 return;
             } 
             
             this.body.style.cursor = "nwse-resize";
-            this.body.classList.remove('not-allowed');
         
             this.checkIfMinimumWidth(width) && (width = this.modalMinimumSize.width);
-
             this.checkIfMinimumHeight(height) && (height = this.modalMinimumSize.height);
 
             size = {
@@ -451,12 +420,10 @@ DragnResize.prototype.checkIfMinimumHeight = function(height){
             isWidthNarrow = this.checkIfMinimumWidth(width);
             isHeightShort = this.checkIfMinimumHeight(height);
             if (isWidthNarrow && isHeightShort) {
-                this.body.classList.add('not-allowed');
                 return;
             } 
             
             this.body.style.cursor = "nesw-resize";
-            this.body.classList.remove('not-allowed');
 
             if (isWidthNarrow && !isHeightShort) {
                 size = {
@@ -547,7 +514,7 @@ DragnResize.prototype.getOriginPosition = function(){
  */  
 DragnResize.prototype.subscribeIfFinishResize = function(){
     this.body.addEventListener('mouseup', e => this.finishResizeHandler(e));
-    this.body.addEventListener('mouseleave', e => this.finishResizeHandler(e));
+    // this.body.addEventListener('mouseleave', e => this.finishResizeHandler(e));
 }
 
 
@@ -560,7 +527,6 @@ DragnResize.prototype.finishResizeHandler = function(e){
     
     //set mouse cursor back to normal
     this.body.style.cursor = "default";
-    this.body.classList.remove('not-allowed');
 
     //if user was resizing, quit resize
     this.isModalResized() && store.dispatch({ type: "resize/end" });

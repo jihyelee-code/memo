@@ -15,7 +15,7 @@ export function MemoCreator (width, height){
     this.defSetting = {
         width: width + "px",
         height: height + "px",
-        top: 0,
+        top: 60,
         left: 0,
         randomPosRange: 50
     };

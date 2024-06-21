@@ -12,8 +12,8 @@ export const NAV_HEIGHT = 50;
 function Memo (){
     this.memoCnt = 0;
     this.size = {
-        width: "200",
-        height: "230"
+        width: "200px",
+        height: "230px"
     };
     this.dragnDrop = null;
     this.dragnResize = null;
@@ -34,10 +34,10 @@ Memo.prototype.createMemoHandler = function(e, _this){
     store.dispatch({
         type: "modal/update",
         name: `memo_${_this.memoCnt}`,
-        x: Number(elems.container.style.left.match(/\d+/g)[0]),
-        y: Number(elems.container.style.top.match(/\d+/g)[0]),
-        width: Number(this.size.width),
-        height: Number(this.size.height)
+        x: elems.container.style.left,
+        y: elems.container.style.top,
+        width: this.size.width,
+        height: this.size.height
     });
 
     

@@ -88,12 +88,13 @@ DragnDrop.prototype.mouseMoveHandler = function (e){
 
   const mousePosition = draggableStatus.mousePosition;
   const name = draggableStatus.name;
-  const computedY = e.pageY - mousePosition.y - NAV_HEIGHT;
+  // const computedY = e.pageY - mousePosition.y - NAV_HEIGHT;
+  const computedY = e.pageY - mousePosition.y;
 
   let modalPosition = {
     x: e.pageX - mousePosition.x, 
-    // y: computedY < NAV_HEIGHT ? NAV_HEIGHT : computedY,
-    y: computedY < 0 ? 0 : computedY,
+    y: computedY < NAV_HEIGHT ? NAV_HEIGHT : computedY,
+    // y: computedY < 0 ? 0 : computedY,
   };
 
   store.dispatch({
