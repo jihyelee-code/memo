@@ -34,8 +34,8 @@ DragnDrop.prototype.init = function (header){
 };
 
 DragnDrop.prototype.bodyEvnts = function (){
-  this.body.addEventListener('mouseup', this.mouseUpHandler);
-  this.body.addEventListener('mouseleave', this.mouseLeaveHandler);
+  this.body.addEventListener('mouseup', this.dropHandler);
+  // this.body.addEventListener('mouseleave', this.dropHandler);
   this.body.addEventListener('mousemove', this.mouseMoveHandler);
   return this;
 }
@@ -114,7 +114,7 @@ DragnDrop.prototype.mouseMoveHandler = function (e){
  * @description Drop event handler
  * @return {DragnDrop}
  */
-DragnDrop.prototype.mouseUpHandler = function (e){
+DragnDrop.prototype.dropHandler = function (e){
   e.preventDefault();
   e.stopPropagation();
   const getDraggable = (state) => state.draggable;
@@ -125,24 +125,4 @@ DragnDrop.prototype.mouseUpHandler = function (e){
   }
 
   store.dispatch({ type: "draggable/end" });
-}
-
-/**
- * @author JHLEE
- * @memberof DragnDrop
- * @function
- * @description If mouse is out of the browser, stop dragging.
- * @return {DragnDrop}
- */
-DragnDrop.prototype.mouseLeaveHandler = function (e){
-    e.preventDefault();
-    e.stopPropagation();
-    const getDraggable = (state) => state.draggable;
-    const draggableStatus = getDraggable(store.getState());
-
-    if (!draggableStatus.mouseOn) {
-      return;
-    }
-
-    store.dispatch({ type: "draggable/end" });
 }
