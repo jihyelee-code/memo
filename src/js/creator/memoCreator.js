@@ -24,32 +24,28 @@ export function MemoCreator (width, height){
         TAG: "section",
         CLASS_NAME: ["card-header"],
         INNER_HTML: `
-        <div class="w-100 d-flex justify-content-between">
-            <div>
+            <div class="d-flex justify-content-end align-items-center">
                 <button type="button" aria-label="Color"
                         data-click="color"
-                        class="btn btn-sm btn-light">
+                        class="btn btn-sm btn-transparent">
                         <i class="bi bi-three-dots-vertical"></i>
                 </button>
-            </div>
-            <div>
                 <button type="button" aria-label="Restore"
                         data-click="restore"
-                        class="btn btn-sm btn-light d-none">
+                        class="btn btn-sm btn-transparent d-none">
                         <i class="bi bi-front"></i>
                 </button>
                 <button type="button" aria-label="Maximize"
                         data-click="maximize"
-                        class="btn btn-sm btn-light">
+                        class="btn btn-sm btn-transparent">
                         <i class="bi bi-square"></i>
                 </button>
                 <button type="button" aria-label="Close"  
                         data-click="close"
-                        class="btn btn-sm btn-light">
+                        class="btn btn-sm btn-transparent">
                         <i class="bi bi-x-lg"></i>
                 </button>
             </div>
-        </div>
         `,
     };
 

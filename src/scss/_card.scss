@@ -65,8 +65,16 @@
     border-top: 0;
   }
 
+  button{
+    // display: none;
+  }
+
   &:hover{
-    background-color: $light;
+    // background-color: $light;
+
+    button{
+      display: inline-block;
+    }
   }
 }
 
@@ -82,6 +90,12 @@
     -moz-box-sizing: border-box; 
     box-sizing: border-box;
     resize: none;
+    border: none;
+
+    &:focus{
+      border: none;
+      outline: none;
+    }
   }
 }
 
@@ -115,11 +129,14 @@
 //
 
 .card-header {
-  padding: var(--#{$prefix}card-cap-padding-y) var(--#{$prefix}card-cap-padding-x);
+  // padding: var(--#{$prefix}card-cap-padding-y) var(--#{$prefix}card-cap-padding-x);
+  padding: 0;
   margin-bottom: 0; // Removes the default margin-bottom of <hN>
   color: var(--#{$prefix}card-cap-color);
-  background-color: var(--#{$prefix}card-cap-bg);
-  border-bottom: var(--#{$prefix}card-border-width) solid var(--#{$prefix}card-border-color);
+  // background-color: var(--#{$prefix}card-cap-bg);
+  // border-bottom: var(--#{$prefix}card-border-width) solid var(--#{$prefix}card-border-color);
+  // min-height: $card-header-height;
+  background-color: $primary;
 
   &:first-child {
     @include border-radius(var(--#{$prefix}card-inner-border-radius) var(--#{$prefix}card-inner-border-radius) 0 0);
@@ -253,7 +270,7 @@
 
 .corner-bottom{
   width: 100%;
-  height: 5px;
+  height: 1.5px;
   background: transparent;
   position: absolute;
   cursor: ns-resize;
@@ -262,8 +279,8 @@
 }
 
 .corner-bottom-right{
-  width: 5px;
-  height: 5px;
+  width: 1.5px;
+  height: 1.5px;
   background: transparent;
   position: absolute;
   cursor: nwse-resize;
@@ -274,8 +291,8 @@
 
 
 .corner-bottom-left{
-  width: 5px;
-  height: 5px;
+  width: 1.5px;
+  height: 1.5px;
   background: transparent;
   position: absolute;
   cursor: nesw-resize;
@@ -285,7 +302,7 @@
 }
 
 .corner-right{
-  width: 5px;
+  width: 1.5px;
   height: 100%;
   background: transparent;
   position: absolute;
@@ -296,7 +313,7 @@
 
 .corner-top{
   width: 100%;
-  height: 5px;
+  height: 1.5px;
   background: transparent;
   position: absolute;
   cursor: ns-resize;
@@ -305,8 +322,8 @@
 }
 
 .corner-top-left{
-  width: 5px;
-  height: 5px;
+  width: 1.5px;
+  height: 1.5px;
   background: transparent;
   position: absolute;
   cursor: nwse-resize;
@@ -316,8 +333,8 @@
 }
 
 .corner-top-right{
-  width: 5px;
-  height: 5px;
+  width: 1.5px;
+  height: 1.5px;
   background: transparent;
   position: absolute;
   cursor: nesw-resize;
@@ -327,7 +344,7 @@
 }
 
 .corner-left{
-  width: 5px;
+  width: 1.5px;
   height: 100%;
   background: transparent;
   position: absolute;

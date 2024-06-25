@@ -407,7 +407,7 @@ $gradient: linear-gradient(180deg, rgba($white, .15), rgba($white, 0)) !default;
 // You can add more entries to the $spacers map, should you need more variation.
 
 // scss-docs-start spacer-variables-maps
-$spacer: 1rem !default;
+$spacer: .82rem;
 $spacers: (
   0: 0,
   1: $spacer * .25,
@@ -544,8 +544,8 @@ $border-color-translucent:    rgba($black, .175) !default;
 // scss-docs-end border-variables
 
 // scss-docs-start border-radius-variables
-$border-radius:               .375rem !default;
-$border-radius-sm:            .25rem !default;
+$border-radius:               .3rem;
+$border-radius-sm:            .18rem;
 $border-radius-lg:            .5rem !default;
 $border-radius-xl:            1rem !default;
 $border-radius-xxl:           2rem !default;
@@ -612,9 +612,9 @@ $font-family-code:            var(--#{$prefix}font-monospace) !default;
 // $font-size-root affects the value of `rem`, which is used for as well font sizes, paddings, and margins
 // $font-size-base affects the font size of the body text
 $font-size-root:              null !default;
-$font-size-base:              1rem !default; // Assumes the browser default, typically `16px`
-$font-size-sm:                $font-size-base * .875 !default;
-$font-size-lg:                $font-size-base * 1.25 !default;
+$font-size-base:              .8rem; // Assumes the browser default, typically `16px`
+$font-size-sm:                $font-size-base * .58;
+$font-size-lg:                $font-size-base * 1;
 
 $font-weight-lighter:         lighter !default;
 $font-weight-light:           300 !default;
@@ -798,8 +798,8 @@ $input-btn-focus-color:         $focus-ring-color !default;
 $input-btn-focus-blur:          $focus-ring-blur !default;
 $input-btn-focus-box-shadow:    $focus-ring-box-shadow !default;
 
-$input-btn-padding-y-sm:      .25rem !default;
-$input-btn-padding-x-sm:      .5rem !default;
+$input-btn-padding-y-sm:      .175rem;
+$input-btn-padding-x-sm:      .22rem;
 $input-btn-font-size-sm:      $font-size-sm !default;
 
 $input-btn-padding-y-lg:      .5rem !default;
@@ -847,7 +847,8 @@ $btn-link-focus-shadow-rgb:   to-rgb(mix(color-contrast($link-color), $link-colo
 
 // Allows for customizing button radius independently from global border radius
 $btn-border-radius:           var(--#{$prefix}border-radius) !default;
-$btn-border-radius-sm:        var(--#{$prefix}border-radius-sm) !default;
+// $btn-border-radius-sm:        var(--#{$prefix}border-radius-sm) !default;
+$btn-border-radius-sm:        0;
 $btn-border-radius-lg:        var(--#{$prefix}border-radius-lg) !default;
 
 $btn-transition:              color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out !default;
@@ -1350,7 +1351,7 @@ $card-border-radius:                var(--#{$prefix}border-radius) !default;
 $card-box-shadow:                   null !default;
 $card-inner-border-radius:          subtract($card-border-radius, $card-border-width) !default;
 $card-cap-padding-y:                $card-spacer-y * .5 !default;
-$card-cap-padding-x:                $card-spacer-x !default;
+$card-cap-padding-x:                $card-spacer-x * .5;
 $card-cap-bg:                       rgba(var(--#{$prefix}body-color-rgb), .03) !default;
 $card-cap-color:                    null !default;
 $card-height:                       null !default;
@@ -1358,6 +1359,7 @@ $card-color:                        null !default;
 $card-bg:                           var(--#{$prefix}body-bg) !default;
 $card-img-overlay-padding:          $spacer !default;
 $card-group-margin:                 $grid-gutter-width * .5 !default;
+// $card-header-height:                calc(#{$btn-padding-y-sm} + #{$btn-line-height}rem);
 // scss-docs-end card-variables
 
 // Accordion

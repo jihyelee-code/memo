@@ -205,3 +205,11 @@
 .btn-sm {
   @include button-size($btn-padding-y-sm, $btn-padding-x-sm, $btn-font-size-sm, $btn-border-radius-sm);
 }
+
+.btn-transparent{
+  background-color: transparent;
+
+  &:hover{
+    background-color: rgba(255, 255, 255, 0.255);
+  }
+}

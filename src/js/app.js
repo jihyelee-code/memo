@@ -7,7 +7,7 @@ const { DragnDrop } = require("./modal/dragndrop");
 
 require.context("../image", true);
 
-export const NAV_HEIGHT = 50;
+export const NAV_HEIGHT = 40;
 
 function Memo (){
     this.memoCnt = 0;
