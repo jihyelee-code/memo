@@ -30,6 +30,8 @@ Memo.prototype.createMemoHandler = function(e, _this){
     elems.container.setAttribute('data-name', `memo_${_this.memoCnt}`);
     //append it to html
     box.appendChild(elems.container);
+    const memoTextArea = elems.body.querySelector('textarea');
+    memoTextArea.focus();
 
     store.dispatch({
         type: "modal/update",
