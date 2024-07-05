@@ -28,7 +28,7 @@ export function MemoCreator (width, height){
                 <button type="button" aria-label="Color"
                         data-click="color"
                         class="btn btn-sm btn-transparent">
-                        <i class="bi bi-three-dots-vertical"></i>
+                        <i class="bi bi-palette"></i>
                 </button>
                 <button type="button" aria-label="Restore"
                         data-click="restore"

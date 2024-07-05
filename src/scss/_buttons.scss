@@ -208,7 +208,7 @@
 
 .btn-transparent{
   background-color: transparent;
-  color: var(--#{$prefix}border-color-translucent);
+  color: shade-color(rgba($black, .175), 40%);
 
   &:hover{
     background-color: rgba(255, 255, 255, 0.255);
