@@ -65,14 +65,14 @@
     border-top: 0;
   }
 
-  button{
+  .btn{
     visibility: hidden;
   }
 
   &:hover{
     // background-color: $light;
 
-    button{
+    .btn{
       visibility: visible;
     }
   }

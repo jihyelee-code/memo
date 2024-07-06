@@ -25,13 +25,6 @@ export default function modal(state = {}, action) {
                     y: `${NAV_HEIGHT}px` 
                 } };
 
-        // case "modal/restore":
-        //     return { ...state, 
-        //         [action.name]: { 
-        //             ...state[action.name], 
-        //             width: "restore",
-        //             height: "restore", 
-        //         } };
         case "modal/position":
             return { ...state, 
                 [action.name]: { 

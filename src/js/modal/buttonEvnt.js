@@ -9,8 +9,8 @@ import { getZIndex, store } from "../reducer/store";
 export function ButtonEvnt(modal){
   // this.ROLE_CLOSE = '[data-role="close"]';
   this.BTN_CLICK = {
-    COLOR: '[data-click="color"]',
-    RESTORE: '[data-click="restore"]',
+    BG_COLOR: '[id="bgColor"]',
+    MINIMIZE: '[data-click="minimize"]',
     MAXIMIZE: '[data-click="maximize"]',
     CLOSE: '[data-click="close"]'
   };
@@ -26,6 +26,16 @@ export function ButtonEvnt(modal){
   };
 
 }
+
+
+ButtonEvnt.prototype.bgColorEvent = function (){
+  const bgColorBtn = this.modal.querySelector(this.BTN_CLICK.BG_COLOR);
+  bgColorBtn.addEventListener('change', e => {
+    e.preventDefault();
+    this.modal.querySelector('.card-header').style.backgroundColor = e.target.value;
+  })
+}
+
 
 ButtonEvnt.prototype.maximizeEvent = function (){
     const maxBtn = this.modal.querySelector(this.BTN_CLICK.MAXIMIZE);
@@ -43,8 +53,8 @@ ButtonEvnt.prototype.maximizeEvent = function (){
 
       //hide and show buttons
       const btnContainer = maxBtn.parentElement;
-      const restrBtn = btnContainer.querySelector(this.BTN_CLICK.RESTORE);
-      restrBtn.classList.remove('d-none');
+      const minimizeBtn = btnContainer.querySelector(this.BTN_CLICK.MINIMIZE);
+      minimizeBtn.classList.remove('d-none');
       maxBtn.classList.add('d-none');
 
       store.dispatch({ type: "modal/maximize", name: this.modalName });
@@ -52,19 +62,17 @@ ButtonEvnt.prototype.maximizeEvent = function (){
     })
 }
 
-ButtonEvnt.prototype.restoreEvent = function (){
-    const restrBtn = this.modal.querySelector(this.BTN_CLICK.RESTORE);
-    restrBtn.addEventListener('click', e => {
+ButtonEvnt.prototype.minimizeEvent = function (){
+    const minimizeBtn = this.modal.querySelector(this.BTN_CLICK.MINIMIZE);
+    minimizeBtn.addEventListener('click', e => {
       e.preventDefault();
 
       //hide and show buttons
-      const btnContainer = restrBtn.parentElement;
+      const btnContainer = minimizeBtn.parentElement;
       const maxBtn = btnContainer.querySelector(this.BTN_CLICK.MAXIMIZE);
       maxBtn.classList.remove('d-none');
-      restrBtn.classList.add('d-none');
+      minimizeBtn.classList.add('d-none');
 
-      // store.dispatch({ type: "modal/restore", name: this.modalName });
-      
       store.dispatch({ 
         type: "modal/update", 
         name: this.modalName, 
@@ -199,5 +207,6 @@ ButtonEvnt.prototype.init = function (){
   this.zIndexEvent();
   this.closeEvent();
   this.maximizeEvent();
-  this.restoreEvent();
+  this.minimizeEvent();
+  this.bgColorEvent();
 }

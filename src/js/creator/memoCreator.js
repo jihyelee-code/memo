@@ -25,22 +25,23 @@ export function MemoCreator (width, height){
         CLASS_NAME: ["card-header"],
         INNER_HTML: `
             <div class="d-flex justify-content-end align-items-center">
-                <button type="button" aria-label="Color"
-                        data-click="color"
-                        class="btn btn-sm btn-transparent">
+                <div>
+                    <label for="bgColor" title="Background color" class="btn btn-sm btn-transparent">
                         <i class="bi bi-palette"></i>
-                </button>
-                <button type="button" aria-label="Restore"
-                        data-click="restore"
+                        <input type="color" id="bgColor" class="d-none" ></input>
+                    </label>
+                </div>
+                <button type="button" title="Minimize" aria-label="Minimize"
+                        data-click="minimize"
                         class="btn btn-sm btn-transparent d-none">
                         <i class="bi bi-front"></i>
                 </button>
-                <button type="button" aria-label="Maximize"
+                <button type="button" title="Maximize" aria-label="Maximize"
                         data-click="maximize"
                         class="btn btn-sm btn-transparent">
                         <i class="bi bi-square"></i>
                 </button>
-                <button type="button" aria-label="Close"  
+                <button type="button" title="Close" aria-label="Close"  
                         data-click="close"
                         class="btn btn-sm btn-transparent">
                         <i class="bi bi-x-lg"></i>
