@@ -25,6 +25,11 @@ export function MemoCreator (width, height){
         CLASS_NAME: ["card-header"],
         INNER_HTML: `
             <div class="d-flex justify-content-end align-items-center">
+                <button type="button" title="Table" aria-label="Table"
+                        data-click="table"
+                        class="btn btn-sm btn-transparent">
+                        <i class="bi bi-border-all"></i>
+                </button>    
                 <div>
                     <label for="bgColor" title="Background color" class="btn btn-sm btn-transparent">
                         <i class="bi bi-palette"></i>

@@ -12,7 +12,8 @@ export function ButtonEvnt(modal){
     BG_COLOR: '[id="bgColor"]',
     MINIMIZE: '[data-click="minimize"]',
     MAXIMIZE: '[data-click="maximize"]',
-    CLOSE: '[data-click="close"]'
+    CLOSE: '[data-click="close"]',
+    TABLE: '[data-click="table"]'
   };
 
   this.modal = modal;
@@ -25,6 +26,14 @@ export function ButtonEvnt(modal){
     y: "0px"
   };
 
+}
+
+ButtonEvnt.prototype.tableEvent = function (){
+  const tableBtn = this.modal.querySelector(this.BTN_CLICK.TABLE);
+  tableBtn.addEventListener('click', e => {
+    e.preventDefault();
+    // const table = new Tabulator(`${this.modalName}_`)
+  })
 }
 
 

@@ -44,10 +44,11 @@
   $active-color: color-contrast($active-background)
 ) {
   --#{$prefix}btn-color: #{$color};
-  --#{$prefix}btn-border-color: #{$color};
-  --#{$prefix}btn-hover-color: #{$color-hover};
-  --#{$prefix}btn-hover-bg: #{$active-background};
-  --#{$prefix}btn-hover-border-color: #{$active-border};
+  --#{$prefix}btn-border-color: transparent;
+  // --#{$prefix}btn-hover-color: #{$color-hover};
+  --#{$prefix}btn-hover-color: #{$white};
+  --#{$prefix}btn-hover-bg: #{tint-color($active-background, 40%)};
+  --#{$prefix}btn-hover-border-color: #{tint-color($active-border, 40%)};
   --#{$prefix}btn-focus-shadow-rgb: #{to-rgb($color)};
   --#{$prefix}btn-active-color: #{$active-color};
   --#{$prefix}btn-active-bg: #{$active-background};
