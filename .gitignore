@@ -2,7 +2,6 @@
 /dist
 /tmp
 /out-tsc
-/public
 
 # Runtime data
 pids
