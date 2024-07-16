@@ -5,7 +5,7 @@ import { store } from "./reducer/store";
 const { MemoCreator } = require("./creator/memoCreator");
 const { DragnDrop } = require("./modal/dragndrop");
 
-require.context("../image", true);
+// require.context("../image", true);
 
 export const NAV_HEIGHT = 40;
 
