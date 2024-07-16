@@ -46,7 +46,7 @@ module.exports = {
             scriptLoading: 'blocking',
             showErrors: true,
             template: path.join(__dirname, './src/html/index.html'),
-            filename: path.join(__dirname, './dist/index.html'),
+            filename: path.join(__dirname, './docs/index.html'),
             // base: `http://${host}:${port}/`,
             chunks: ["index"],
             // minify: true,
@@ -60,7 +60,7 @@ module.exports = {
         })
     ],
     output: {
-        path: path.join(__dirname, './dist'),
+        path: path.join(__dirname, './docs'),
         publicPath: "/",
         filename: 'js/[name].bundle.js',
     },
@@ -163,7 +163,7 @@ module.exports = {
     },
     devServer: {
         server: "https",
-        static: path.join(__dirname, 'dist/'),
+        static: path.join(__dirname, 'docs/'),
         compress: true,
         port: 1004,
         host: '127.0.0.1', 
