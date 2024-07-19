@@ -53,7 +53,7 @@ ButtonEvnt.prototype.maximizeEvent = function (){
 
       //store current size and position of the modal
       const state = store.getState();
-      const modalInfo = state.modal[this.modalName];
+      const modalInfo = state.mutate[this.modalName];
 
       this.originInfo.width = modalInfo.width;
       this.originInfo.height = modalInfo.height;
@@ -66,7 +66,7 @@ ButtonEvnt.prototype.maximizeEvent = function (){
       minimizeBtn.classList.remove('d-none');
       maxBtn.classList.add('d-none');
 
-      store.dispatch({ type: "modal/maximize", name: this.modalName });
+      store.dispatch({ type: "mutate/maximize", name: this.modalName });
       
     })
 }
@@ -83,7 +83,7 @@ ButtonEvnt.prototype.minimizeEvent = function (){
       minimizeBtn.classList.add('d-none');
 
       store.dispatch({ 
-        type: "modal/update", 
+        type: "mutate/update", 
         name: this.modalName, 
         x: this.originInfo.x, 
         y: this.originInfo.y, 
@@ -109,8 +109,8 @@ ButtonEvnt.prototype.closeEvent = function (){
       this.unsubscribe();
       
       //remove from redux store
-      store.dispatch({ type: "modal/remove", name: this.modalName });
-      store.dispatch({ type: "current/active", name: "" });
+      store.dispatch({ type: "mutate/delete", name: this.modalName });
+      store.dispatch({ type: "active", name: "" });
       
       //remove html
       this.modal.parentElement.removeChild(this.modal);
@@ -141,8 +141,8 @@ ButtonEvnt.prototype.zIndexEvent = function (){
  */
 ButtonEvnt.prototype.updateAsCurrent = function (){
     const zIndex = getZIndex();
-    store.dispatch({ type: "modal/active", name: this.modalName, zIndex });
-    store.dispatch({ type: "current/active", name: this.modalName });
+    store.dispatch({ type: "mutate/active", name: this.modalName, zIndex });
+    store.dispatch({ type: "active", name: this.modalName });
   }
 
 
@@ -160,11 +160,11 @@ ButtonEvnt.prototype.updateAsCurrent = function (){
 ButtonEvnt.prototype.updateModalState = function (){
   const state = store.getState();
 
-  if(this.modalName !== state.current.name){
+  if(this.modalName !== state.active.name){
     return;
   }
 
-  const info = state.modal[this.modalName];
+  const info = state.mutate[this.modalName];
 
   if(info.width){
     this.modal.style.width = info.width;

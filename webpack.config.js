@@ -161,22 +161,22 @@ module.exports = {
             "assert": require.resolve("assert/")
         },
     },
-    // devServer: {
-    //     server: "https",
-    //     static: path.join(__dirname, 'docs/'),
-    //     compress: true,
-    //     port: 1004,
-    //     host: '127.0.0.1', 
-    //     open: true,
-    //     devMiddleware: {
-    //         writeToDisk: true,
-    //     },
-    //     liveReload: true,
-    //     hot: true,
-    //     historyApiFallback:{
-    //         rewrites: [
-    //             { from: /^\/$/, to: '/index.html'}
-    //         ]
-    //     }
-    // }
+    devServer: {
+        server: "https",
+        static: path.join(__dirname, 'docs/'),
+        compress: true,
+        port: 1004,
+        host: '127.0.0.1', 
+        open: true,
+        devMiddleware: {
+            writeToDisk: true,
+        },
+        liveReload: true,
+        hot: true,
+        historyApiFallback:{
+            rewrites: [
+                { from: /^\/$/, to: '/index.html'}
+            ]
+        }
+    }
 };

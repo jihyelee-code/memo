@@ -1,21 +1,33 @@
 import { NAV_HEIGHT } from "../app";
 
-export default function modal(state = {}, action) {
+export default function mutate(state = {}, action) {
     // z = z+1;
     switch (action.type) {
-        case "modal/active":
+        case "mutate/update":
+            return {
+                ...state, 
+                [action.name]: {
+                    name: action.name, 
+                    x: action.x, 
+                    y: action.y, 
+                    width: action.width, 
+                    height: action.height
+                }
+            };
+
+        case "mutate/active":
             return { ...state, 
                 [action.name]: { 
                     ...state[action.name], 
                     zIndex: action.zIndex 
                 } };
 
-        case "modal/remove":
+        case "mutate/delete":
             const copiedState = {...state};
             delete copiedState[action.name];
             return copiedState;
 
-        case "modal/maximize":
+        case "mutate/maximize":
             return { ...state, 
                 [action.name]: { 
                     ...state[action.name], 
@@ -25,32 +37,21 @@ export default function modal(state = {}, action) {
                     y: `${NAV_HEIGHT}px` 
                 } };
 
-        case "modal/position":
+        case "mutate/position":
             return { ...state, 
                 [action.name]: { 
                     ...state[action.name], 
-                    x: action.x ? action.x : "0px", 
-                    y: action.y ? action.y : "0px" 
+                    x: action.x, 
+                    y: action.y 
                 } };
 
-        case "modal/size":
+        case "mutate/size":
             return { ...state, 
                 [action.name]: { 
                     ...state[action.name], 
                     width: action.width, 
                     height: action.height 
                 } };
-
-        case "modal/update":
-            return {
-                ...state, 
-                [action.name]: {
-                    name: action.name, 
-                    x: action.x, y: action.y, 
-                    width: action.width, 
-                    height: action.height
-                }
-            };
 
         default:
             return { ...state };

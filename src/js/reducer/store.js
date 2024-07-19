@@ -1,16 +1,15 @@
 import { configureStore } from "@reduxjs/toolkit";
-import current from "./current";
-import draggable from "./draggable";
-import modal from "./modal";
-import resizer from "./resizer";
-// import heightResizer from "./heightResizer";
+import active from "./active";
+import dragndrop from "./dragndrop";
+import mutate from "./mutate";
+import resize from "./resize";
 
 export let store = configureStore({
     reducer: {
-        modal,
-        draggable,
-        current,
-        resizer,
+        mutate,
+        dragndrop,
+        active,
+        resize,
     }
 });
 

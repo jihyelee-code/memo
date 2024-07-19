@@ -58,9 +58,9 @@ DragnDrop.prototype.mouseDownHandler = function (e){
 
   const name = e.currentTarget.parentElement.dataset.name;
 
-  store.dispatch({ type: "current/active", name });
+  store.dispatch({ type: "active", name });
   store.dispatch({
-    type: "draggable/start",
+    type: "dragndrop/start",
     name,
     mousePosition: mousePositionOnModal,
   });
@@ -79,15 +79,15 @@ DragnDrop.prototype.mouseDownHandler = function (e){
 DragnDrop.prototype.mouseMoveHandler = function (e){
   e.preventDefault();
   e.stopPropagation();
-  const getDraggable = (state) => state.draggable;
-  const draggableStatus = getDraggable(store.getState());
+  const getDragndrop = (state) => state.dragndrop;
+  const dragndropStatus = getDragndrop(store.getState());
   
-  if (!draggableStatus.mouseOn) {
+  if (!dragndropStatus.mouseOn) {
     return;
   }
 
-  const mousePosition = draggableStatus.mousePosition;
-  const name = draggableStatus.name;
+  const mousePosition = dragndropStatus.mousePosition;
+  const name = dragndropStatus.name;
   // const computedY = e.pageY - mousePosition.y - NAV_HEIGHT;
   const computedY = e.pageY - mousePosition.y;
 
@@ -98,7 +98,7 @@ DragnDrop.prototype.mouseMoveHandler = function (e){
   };
 
   store.dispatch({
-    type: "modal/position",
+    type: "mutate/position",
     name,
     x: `${modalPosition.x}px`,
     y: `${modalPosition.y}px`,
@@ -117,12 +117,12 @@ DragnDrop.prototype.mouseMoveHandler = function (e){
 DragnDrop.prototype.dropHandler = function (e){
   e.preventDefault();
   e.stopPropagation();
-  const getDraggable = (state) => state.draggable;
-  const draggableStatus = getDraggable(store.getState());
+  const getDragndrop = (state) => state.dragndrop;
+  const dragndropStatus = getDragndrop(store.getState());
 
-  if (!draggableStatus.mouseOn) {
+  if (!dragndropStatus.mouseOn) {
     return;
   }
 
-  store.dispatch({ type: "draggable/end" });
+  store.dispatch({ type: "dragndrop/end" });
 }

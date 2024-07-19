@@ -1,7 +1,7 @@
 import { NAV_HEIGHT } from "../app";
 import { store } from "../reducer/store";
 
-export function DragnResize(width = "200px", height = "230px"){
+export function Resize(width = "200px", height = "230px"){
     this.CORNER_RESIZER = {
         LEFT : "left",
         TOP : "top",
@@ -20,7 +20,7 @@ export function DragnResize(width = "200px", height = "230px"){
 
     /**
     * @author JHLEE
-    * @member DragnResize#body
+    * @member Resize#body
     * @type {Element}
     * @description The body element
     */
@@ -33,12 +33,12 @@ export function DragnResize(width = "200px", height = "230px"){
 
 /**
  * @author JHLEE
- * @memberof DragnResize
+ * @memberof Resize
  * @function
  * @description Initialize events
- * @return {DragnResize}
+ * @return {Resize}
  */
-DragnResize.prototype.init = function (modal){
+Resize.prototype.init = function (modal){
     this.modal = modal;
 
     //mouse down resize click start event to handle modal resize
@@ -56,7 +56,7 @@ DragnResize.prototype.init = function (modal){
 };
 
 
-DragnResize.prototype.resizeClickStartHandler = function (e, _this){
+Resize.prototype.resizeClickStartHandler = function (e, _this){
     e.preventDefault();
     const resizeTrigger = e.currentTarget;
     const resizeTriggerName = resizeTrigger.parentElement.parentElement.dataset.name;
@@ -71,8 +71,8 @@ DragnResize.prototype.resizeClickStartHandler = function (e, _this){
 
 }
 
-DragnResize.prototype.updateAsCurrent = function(name, mousePosition, resizeTriggerProp){
-    store.dispatch({ type: "current/active", name });
+Resize.prototype.updateAsCurrent = function(name, mousePosition, resizeTriggerProp){
+    store.dispatch({ type: "active", name });
     store.dispatch({ type: "resize/start", name, mousePosition, resizeTriggerProp});
 
     return this;
@@ -81,40 +81,40 @@ DragnResize.prototype.updateAsCurrent = function(name, mousePosition, resizeTrig
 /**
  * Get resized modal information
  */
-DragnResize.prototype.resizeInfo = function (){
-    const selectValue = state => state.resizer;
+Resize.prototype.resizeInfo = function (){
+    const selectValue = state => state.resize;
     const resizeInfo = selectValue(store.getState())
     return resizeInfo;
 }
 
 
-DragnResize.prototype.resizedModalInfo = function (){
+Resize.prototype.resizedModalInfo = function (){
     return this.getModal()[this.resizeInfo().name];
 }
 
 /**
  * Get the status of resize
  */
-DragnResize.prototype.isModalResized = function (){
+Resize.prototype.isModalResized = function (){
     return this.resizeInfo().isResized;
 }
 
 
 /**
  * @author JHLEE
- * @memberof DragnResize
+ * @memberof Resize
  * @function
  * @description Maybe only body element would need this to subscribe if
  *              any of modal has been triggered to be resized.
  */
- DragnResize.prototype.subscribeIfResize = function(){
+ Resize.prototype.subscribeIfResize = function(){
     this.body.addEventListener('mousemove', e => this.resizeHandler(e, this));
 }
 
 /**
  * Handle resize when mouse moves
  */
-DragnResize.prototype.resizeHandler = function (e){
+Resize.prototype.resizeHandler = function (e){
     e.preventDefault();
     e.stopPropagation();
 
@@ -128,7 +128,7 @@ DragnResize.prototype.resizeHandler = function (e){
 * calc width when mouse resizing position DOES effect of modal position
 * @param {number} mousePositionX - e.pageX which is the mouse x position
 */
-DragnResize.prototype.getWidthFromUnpositionedModal = function(mousePositionX) {
+Resize.prototype.getWidthFromUnpositionedModal = function(mousePositionX) {
    let width = (this.getOriginPosition().x + this.getOriginSize().width) - mousePositionX;
 
    return width;
@@ -138,7 +138,7 @@ DragnResize.prototype.getWidthFromUnpositionedModal = function(mousePositionX) {
  * calc width when mouse resizing position DOES NOT effect of modal position
  * @param {number} mousePositionX - e.pageX which is the mouse x position
  */
-DragnResize.prototype.getWidthFromPositionedModal = function(mousePositionX) {
+Resize.prototype.getWidthFromPositionedModal = function(mousePositionX) {
     let width = mousePositionX - this.getOriginPosition().x;
     return width;
 }
@@ -148,7 +148,7 @@ DragnResize.prototype.getWidthFromPositionedModal = function(mousePositionX) {
  * calc height when mouse resizing position DOES effect of modal position
  * @param {number} mousePositionY - e.pageY which is the mouse y position
  */
- DragnResize.prototype.getHeightFromUnpositionedModal = function(mousePositionY){
+ Resize.prototype.getHeightFromUnpositionedModal = function(mousePositionY){
     let height = (this.getOriginPosition().y + this.getOriginSize().height) - mousePositionY;
 
 
@@ -159,7 +159,7 @@ DragnResize.prototype.getWidthFromPositionedModal = function(mousePositionX) {
 * calc height when mouse resizing position DOES NOT effect of modal position
 * @param {number} mousePositionY - e.pageY which is the mouse y position
 */
-DragnResize.prototype.getHeightFromPositionedModal = function(mousePositionY){
+Resize.prototype.getHeightFromPositionedModal = function(mousePositionY){
     let height = mousePositionY - this.getOriginPosition().y;
     return height;
 }
@@ -170,7 +170,7 @@ DragnResize.prototype.getHeightFromPositionedModal = function(mousePositionY){
  * if width minimum ? return null : set modal size with changed width
  * @param {number} width - changed width
  */
-DragnResize.prototype.setSizeWithWidth = function(width) {
+Resize.prototype.setSizeWithWidth = function(width) {
     //check if width < min width => return;
     let isMinimum = this.checkIfMinimumWidth(width);
     if (isMinimum) {
@@ -190,7 +190,7 @@ DragnResize.prototype.setSizeWithWidth = function(width) {
 * if height minimum ? return null : set modal size with changed height
 * @param {number} height - changed height
 */
-DragnResize.prototype.setSizeWithHeight = function(height){
+Resize.prototype.setSizeWithHeight = function(height){
     let isMinimum = this.checkIfMinimumHeight(height);
     
     if (isMinimum) {
@@ -208,7 +208,7 @@ DragnResize.prototype.setSizeWithHeight = function(height){
  * check if resized width is narrower than the width of minimum size
  * @param {number} width - resized width
  */
-DragnResize.prototype.checkIfMinimumWidth = function(width){
+Resize.prototype.checkIfMinimumWidth = function(width){
     
     return (width < this.modalMinimumSize.width) ? true : false;
 }
@@ -217,7 +217,7 @@ DragnResize.prototype.checkIfMinimumWidth = function(width){
  * check if resized height is shorter than the height of minimum size
  * @param {number} height - resized height
  */
-DragnResize.prototype.checkIfMinimumHeight = function(height){
+Resize.prototype.checkIfMinimumHeight = function(height){
     return (height < this.modalMinimumSize.height) ? true : false;
 }
 
@@ -226,7 +226,7 @@ DragnResize.prototype.checkIfMinimumHeight = function(height){
 /**
  * resize: mouse move event handler
  */
- DragnResize.prototype.resizeModal = function(e){
+ Resize.prototype.resizeModal = function(e){
     let mousePositionX = e.pageX;
     let mousePositionY = e.pageY;
 
@@ -457,8 +457,8 @@ DragnResize.prototype.checkIfMinimumHeight = function(height){
 /**
  * Get all the modal information
  */
-DragnResize.prototype.getModal = function(){
-    const selectValue = state => state.modal;
+Resize.prototype.getModal = function(){
+    const selectValue = state => state.mutate;
     const modal = selectValue(store.getState());
     return modal;
 }
@@ -466,7 +466,7 @@ DragnResize.prototype.getModal = function(){
 /**
  * Get the current size of the resize modal
  */
-DragnResize.prototype.getOriginSize = function(){
+Resize.prototype.getOriginSize = function(){
     const modal = this.resizedModalInfo();
     return { width: parseFloat(modal.width.match(/\d+/g)[0]), height: parseFloat(modal.height.match(/\d+/g)[0]) };
 }
@@ -474,9 +474,9 @@ DragnResize.prototype.getOriginSize = function(){
 /**
  * send redux store the size of the modal
  */
- DragnResize.prototype.updateModalSize = function(size){
+ Resize.prototype.updateModalSize = function(size){
     store.dispatch({ 
-        type: "modal/size", 
+        type: "mutate/size", 
         name: this.resizeInfo().name, 
         width: `${size.width}px`, 
         height: `${size.height}px`
@@ -487,10 +487,10 @@ DragnResize.prototype.getOriginSize = function(){
 /**
 * send redux store the position and the size of the modal
 */
-DragnResize.prototype.updateModal = function(size, position) {
+Resize.prototype.updateModal = function(size, position) {
     // store.dispatch(setPositionAndSizeOfModal(getName(), position, size));
     store.dispatch({ 
-        type: "modal/update", 
+        type: "mutate/update", 
         name: this.resizeInfo().name, 
         x: `${position.x}px`, 
         y: `${position.y}px`, 
@@ -503,7 +503,7 @@ DragnResize.prototype.updateModal = function(size, position) {
 /**
  * Get the position of the resize modal
  */
-DragnResize.prototype.getOriginPosition = function(){
+Resize.prototype.getOriginPosition = function(){
     const modal = this.resizedModalInfo();
     return { x: parseFloat(modal.x.match(/\d+/g)[0]), y: parseFloat(modal.y.match(/\d+/g)[0]) };
 }
@@ -512,7 +512,7 @@ DragnResize.prototype.getOriginPosition = function(){
 /**
  * Subscribe if the modal resize has finished
  */  
-DragnResize.prototype.subscribeIfFinishResize = function(){
+Resize.prototype.subscribeIfFinishResize = function(){
     this.body.addEventListener('mouseup', e => this.finishResizeHandler(e));
     // this.body.addEventListener('mouseleave', e => this.finishResizeHandler(e));
 }
@@ -521,7 +521,7 @@ DragnResize.prototype.subscribeIfFinishResize = function(){
 /**
  * Send redux if the resize is done
  */
-DragnResize.prototype.finishResizeHandler = function(e){
+Resize.prototype.finishResizeHandler = function(e){
     e.preventDefault();
     e.stopPropagation();
     
@@ -534,7 +534,7 @@ DragnResize.prototype.finishResizeHandler = function(e){
 }
 
 
-DragnResize.prototype.subscribe = function (){
+Resize.prototype.subscribe = function (){
     this.subscribeIfResize();
     this.subscribeIfFinishResize();
 

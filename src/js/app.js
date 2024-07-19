@@ -1,4 +1,4 @@
-import { DragnResize } from "./modal/dragnResize";
+import { Resize } from "./modal/resize";
 import { ButtonEvnt } from "./modal/buttonEvnt";
 import { store } from "./reducer/store";
 
@@ -9,6 +9,7 @@ const { DragnDrop } = require("./modal/dragndrop");
 
 export const NAV_HEIGHT = 40;
 
+
 function Memo (){
     this.memoCnt = 0;
     this.size = {
@@ -16,7 +17,7 @@ function Memo (){
         height: "230px"
     };
     this.dragnDrop = null;
-    this.dragnResize = null;
+    this.resize = null;
     this.mv = null;
 }
 
@@ -34,7 +35,7 @@ Memo.prototype.createMemoHandler = function(e, _this){
     memoTextArea.focus();
 
     store.dispatch({
-        type: "modal/update",
+        type: "mutate/update",
         name: `memo_${_this.memoCnt}`,
         x: elems.container.style.left,
         y: elems.container.style.top,
@@ -49,7 +50,7 @@ Memo.prototype.createMemoHandler = function(e, _this){
     const mv = new ButtonEvnt(elems.container);
     mv.init();
     this.dragnDrop.init(elems.header);
-    this.dragnResize.init(elems.container);
+    this.resize.init(elems.container);
 
 
     _this.memoCnt++;
@@ -64,8 +65,8 @@ Memo.prototype.init = function(){
     this.dragnDrop = new DragnDrop();
     this.dragnDrop.bodyEvnts();
 
-    this.dragnResize = new DragnResize(this.size.width, this.size.height);
-    this.dragnResize.subscribe();
+    this.resize = new Resize(this.size.width, this.size.height);
+    this.resize.subscribe();
 
 }
 

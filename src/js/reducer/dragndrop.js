@@ -1,20 +1,19 @@
-const draggableModal = {
-    mouseOn: false,
-    name: "",
-    target: "",
-    mousePosition: { x: 0, y: 0 }
-};
 
 /**
- * store for when user dragging a modal
+ * store for when user drags a modal
  * @param {*} state 
  * @param {*} action 
  * @returns null
  */
 
-export default function draggable(state = draggableModal, action){
+export default function dragndrop(state = {
+    mouseOn: false,
+    name: "",
+    target: "",
+    mousePosition: { x: 0, y: 0 }
+}, action){
     switch(action.type){
-        case "draggable/start":
+        case "dragndrop/start":
             return { 
                 ...state, 
                 mouseOn: true, 
@@ -24,7 +23,7 @@ export default function draggable(state = draggableModal, action){
                     y: action.mousePosition.y
                 } 
             };
-        case "draggable/end":
+        case "dragndrop/end":
             return { 
                 ...state, 
                 mouseOn: false 

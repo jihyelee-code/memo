@@ -1,11 +1,9 @@
-const modalInfo = {
+export default function resize( state = {
     isResized: false,
     name: "",
     mousePosition: {},
     resizeTriggerProp: "",
-}
-
-export default function resizer( state = modalInfo, action ){
+}, action ){
     switch(action.type){
         case "resize/start":
             return{

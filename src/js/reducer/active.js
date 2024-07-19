@@ -1,14 +1,14 @@
 
 /**
- * currently activated modal / absMenu information
+ * currently activated modal information
  * @param {*} state 
  * @param {*} action 
  * @returns null
  */
 
- export default function current(state = { name: "" }, action){
+ export default function active(state = { name: "" }, action){
     switch(action.type){
-        case "current/active":
+        case "active":
             return { ...state, name: action.name };
         default:
             return state;
