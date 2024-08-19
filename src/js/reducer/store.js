@@ -1,15 +1,15 @@
 import { configureStore } from "@reduxjs/toolkit";
-import active from "./active";
-import dragndrop from "./dragndrop";
-import mutate from "./mutate";
-import resize from "./resize";
+import focusedModalObserver from "./focusedModalObserver";
+import modalDragObserver from "./modalDragObserver";
+import modalMutateObserver from "./modalMutateObserver";
+import modalResizeObserver from "./modalResizeObserver";
 
 export let store = configureStore({
     reducer: {
-        mutate,
-        dragndrop,
-        active,
-        resize,
+        modalMutateObserver,
+        modalDragObserver,
+        focusedModalObserver,
+        modalResizeObserver,
     }
 });
 

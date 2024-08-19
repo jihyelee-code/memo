@@ -6,9 +6,9 @@
  * @returns null
  */
 
- export default function active(state = { name: "" }, action){
+ export default function focusedModalObserver(state = { name: "" }, action){
     switch(action.type){
-        case "active":
+        case "focus":
             return { ...state, name: action.name };
         default:
             return state;

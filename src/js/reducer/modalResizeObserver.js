@@ -1,18 +1,18 @@
-export default function resize( state = {
+export default function modalResizeObserver( state = {
     isResized: false,
     name: "",
     mousePosition: {},
     resizeTriggerProp: "",
 }, action ){
     switch(action.type){
-        case "resize/start":
+        case "modalResizeObserver/start":
             return{
                 isResized: true,
                 name: action.name,
                 mousePosition: action.mousePosition,
                 resizeTriggerProp: action.resizeTriggerProp
             };
-        case "resize/end":
+        case "modalResizeObserver/end":
             return {
                 isResized: false,
                 name: "",

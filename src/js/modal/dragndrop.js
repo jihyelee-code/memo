@@ -56,11 +56,11 @@ DragnDrop.prototype.mouseDownHandler = function (e){
       y: e.layerY,
   };
 
-  const name = e.currentTarget.parentElement.dataset.name;
+  const name = e.currentTarget.parentElement.parentElement.dataset.name;
 
-  store.dispatch({ type: "active", name });
+  store.dispatch({ type: "focus", name });
   store.dispatch({
-    type: "dragndrop/start",
+    type: "modalDragObserver/start",
     name,
     mousePosition: mousePositionOnModal,
   });
@@ -79,7 +79,7 @@ DragnDrop.prototype.mouseDownHandler = function (e){
 DragnDrop.prototype.mouseMoveHandler = function (e){
   e.preventDefault();
   e.stopPropagation();
-  const getDragndrop = (state) => state.dragndrop;
+  const getDragndrop = (state) => state.modalDragObserver;
   const dragndropStatus = getDragndrop(store.getState());
   
   if (!dragndropStatus.mouseOn) {
@@ -98,7 +98,7 @@ DragnDrop.prototype.mouseMoveHandler = function (e){
   };
 
   store.dispatch({
-    type: "mutate/position",
+    type: "modalMutateObserver/position",
     name,
     x: `${modalPosition.x}px`,
     y: `${modalPosition.y}px`,
@@ -117,12 +117,12 @@ DragnDrop.prototype.mouseMoveHandler = function (e){
 DragnDrop.prototype.dropHandler = function (e){
   e.preventDefault();
   e.stopPropagation();
-  const getDragndrop = (state) => state.dragndrop;
+  const getDragndrop = (state) => state.modalDragObserver;
   const dragndropStatus = getDragndrop(store.getState());
 
   if (!dragndropStatus.mouseOn) {
     return;
   }
 
-  store.dispatch({ type: "dragndrop/end" });
+  store.dispatch({ type: "modalDragObserver/end" });
 }

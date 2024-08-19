@@ -13,7 +13,8 @@ export function ButtonEvnt(modal){
     MINIMIZE: '[data-click="minimize"]',
     MAXIMIZE: '[data-click="maximize"]',
     CLOSE: '[data-click="close"]',
-    TABLE: '[data-click="table"]'
+    TABLE: '[data-click="table"]',
+    DRAG: '[data-click="drag"]'
   };
 
   this.modal = modal;
@@ -46,51 +47,47 @@ ButtonEvnt.prototype.bgColorEvent = function (){
 }
 
 
-ButtonEvnt.prototype.maximizeEvent = function (){
-    const maxBtn = this.modal.querySelector(this.BTN_CLICK.MAXIMIZE);
-    maxBtn.addEventListener('click', e => {
-      e.preventDefault();
 
-      //store current size and position of the modal
-      const state = store.getState();
-      const modalInfo = state.mutate[this.modalName];
+ButtonEvnt.prototype.maximizeEvent = function (e, _this){
+  const maxBtn = _this.modal.querySelector(_this.BTN_CLICK.MAXIMIZE);
+  e.preventDefault();
+  //store current size and position of the modal
+  const state = store.getState();
+  const modalInfo = state.modalMutateObserver[_this.modalName];
 
-      this.originInfo.width = modalInfo.width;
-      this.originInfo.height = modalInfo.height;
-      this.originInfo.x = modalInfo.x;
-      this.originInfo.y = modalInfo.y;
+  _this.originInfo.width = modalInfo.width;
+  _this.originInfo.height = modalInfo.height;
+  _this.originInfo.x = modalInfo.x;
+  _this.originInfo.y = modalInfo.y;
 
-      //hide and show buttons
-      const btnContainer = maxBtn.parentElement;
-      const minimizeBtn = btnContainer.querySelector(this.BTN_CLICK.MINIMIZE);
-      minimizeBtn.classList.remove('d-none');
-      maxBtn.classList.add('d-none');
+  //hide and show buttons
+  const btnContainer = maxBtn.parentElement;
+  const minimizeBtn = btnContainer.querySelector(_this.BTN_CLICK.MINIMIZE);
+  minimizeBtn.classList.remove('d-none');
+  maxBtn.classList.add('d-none');
 
-      store.dispatch({ type: "mutate/maximize", name: this.modalName });
-      
-    })
+  store.dispatch({ type: "modalMutateObserver/maximize", name: _this.modalName });
+    
 }
 
-ButtonEvnt.prototype.minimizeEvent = function (){
-    const minimizeBtn = this.modal.querySelector(this.BTN_CLICK.MINIMIZE);
-    minimizeBtn.addEventListener('click', e => {
+ButtonEvnt.prototype.minimizeEvent = function (e, _this){
+    const minimizeBtn = _this.modal.querySelector(_this.BTN_CLICK.MINIMIZE);
       e.preventDefault();
 
       //hide and show buttons
       const btnContainer = minimizeBtn.parentElement;
-      const maxBtn = btnContainer.querySelector(this.BTN_CLICK.MAXIMIZE);
+      const maxBtn = btnContainer.querySelector(_this.BTN_CLICK.MAXIMIZE);
       maxBtn.classList.remove('d-none');
       minimizeBtn.classList.add('d-none');
 
       store.dispatch({ 
-        type: "mutate/update", 
-        name: this.modalName, 
-        x: this.originInfo.x, 
-        y: this.originInfo.y, 
-        width: this.originInfo.width, 
-        height: this.originInfo.height 
+        type: "modalMutateObserver/update", 
+        name: _this.modalName, 
+        x: _this.originInfo.x, 
+        y: _this.originInfo.y, 
+        width: _this.originInfo.width, 
+        height: _this.originInfo.height 
     });
-  })
 }
 
 /**
@@ -109,8 +106,8 @@ ButtonEvnt.prototype.closeEvent = function (){
       this.unsubscribe();
       
       //remove from redux store
-      store.dispatch({ type: "mutate/delete", name: this.modalName });
-      store.dispatch({ type: "active", name: "" });
+      store.dispatch({ type: "modalMutateObserver/delete", name: this.modalName });
+      store.dispatch({ type: "focus", name: "" });
       
       //remove html
       this.modal.parentElement.removeChild(this.modal);
@@ -141,8 +138,8 @@ ButtonEvnt.prototype.zIndexEvent = function (){
  */
 ButtonEvnt.prototype.updateAsCurrent = function (){
     const zIndex = getZIndex();
-    store.dispatch({ type: "mutate/active", name: this.modalName, zIndex });
-    store.dispatch({ type: "active", name: this.modalName });
+    store.dispatch({ type: "modalMutateObserver/active", name: this.modalName, zIndex });
+    store.dispatch({ type: "focus", name: this.modalName });
   }
 
 
@@ -160,11 +157,11 @@ ButtonEvnt.prototype.updateAsCurrent = function (){
 ButtonEvnt.prototype.updateModalState = function (){
   const state = store.getState();
 
-  if(this.modalName !== state.active.name){
+  if(this.modalName !== state.focusedModalObserver.name){
     return;
   }
 
-  const info = state.mutate[this.modalName];
+  const info = state.modalMutateObserver[this.modalName];
 
   if(info.width){
     this.modal.style.width = info.width;
@@ -215,7 +212,22 @@ ButtonEvnt.prototype.init = function (){
   this.updateAsCurrent();
   this.zIndexEvent();
   this.closeEvent();
-  this.maximizeEvent();
-  this.minimizeEvent();
+  // this.minimizeEvent();
   this.bgColorEvent();
+  // this.maximizeEvent();
+  this.modal.querySelector(this.BTN_CLICK.MINIMIZE)
+      .addEventListener('click', e => this.minimizeEvent(e, this));
+  this.modal.querySelector(this.BTN_CLICK.MAXIMIZE)
+      .addEventListener('click', e => this.maximizeEvent(e, this));
+  this.modal.querySelector(this.BTN_CLICK.DRAG)
+      .addEventListener('dblclick', e => {
+        const modalInfo = store.getState().modalMutateObserver[this.modalName];
+        if(modalInfo.width === "100%"){
+          this.minimizeEvent(e, this);
+          
+        }else{
+          this.maximizeEvent(e, this);
+        }
+      });
+
 }

@@ -35,7 +35,7 @@ Memo.prototype.createMemoHandler = function(e, _this){
     memoTextArea.focus();
 
     store.dispatch({
-        type: "mutate/update",
+        type: "modalMutateObserver/update",
         name: `memo_${_this.memoCnt}`,
         x: elems.container.style.left,
         y: elems.container.style.top,
@@ -49,7 +49,7 @@ Memo.prototype.createMemoHandler = function(e, _this){
     //width, height, z-index and position get changes.
     const mv = new ButtonEvnt(elems.container);
     mv.init();
-    this.dragnDrop.init(elems.header);
+    this.dragnDrop.init(elems.header.querySelector('[data-click="drag"]'));
     this.resize.init(elems.container);
 
 

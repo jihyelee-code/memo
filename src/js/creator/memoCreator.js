@@ -22,9 +22,10 @@ export function MemoCreator (width, height){
 
     this.HEADER = {
         TAG: "section",
-        CLASS_NAME: ["card-header"],
+        CLASS_NAME: ["card-header", "d-flex", "justify-content-end"],
         INNER_HTML: `
-            <div class="d-flex justify-content-end align-items-center">
+            <div class="flex-grow-1" data-click="drag"> </div>
+            <div class="d-flex align-items-center">
                 <button type="button" title="Table" aria-label="Table"
                         data-click="table"
                         class="btn btn-sm btn-transparent">

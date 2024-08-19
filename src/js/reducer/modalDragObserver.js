@@ -6,14 +6,14 @@
  * @returns null
  */
 
-export default function dragndrop(state = {
+export default function modalDragObserver(state = {
     mouseOn: false,
     name: "",
     target: "",
     mousePosition: { x: 0, y: 0 }
 }, action){
     switch(action.type){
-        case "dragndrop/start":
+        case "modalDragObserver/start":
             return { 
                 ...state, 
                 mouseOn: true, 
@@ -23,7 +23,7 @@ export default function dragndrop(state = {
                     y: action.mousePosition.y
                 } 
             };
-        case "dragndrop/end":
+        case "modalDragObserver/end":
             return { 
                 ...state, 
                 mouseOn: false 

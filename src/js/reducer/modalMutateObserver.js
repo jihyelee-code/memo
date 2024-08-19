@@ -1,9 +1,9 @@
 import { NAV_HEIGHT } from "../app";
 
-export default function mutate(state = {}, action) {
+export default function modalMutateObserver(state = {}, action) {
     // z = z+1;
     switch (action.type) {
-        case "mutate/update":
+        case "modalMutateObserver/update":
             return {
                 ...state, 
                 [action.name]: {
@@ -15,19 +15,19 @@ export default function mutate(state = {}, action) {
                 }
             };
 
-        case "mutate/active":
+        case "modalMutateObserver/active":
             return { ...state, 
                 [action.name]: { 
                     ...state[action.name], 
                     zIndex: action.zIndex 
                 } };
 
-        case "mutate/delete":
+        case "modalMutateObserver/delete":
             const copiedState = {...state};
             delete copiedState[action.name];
             return copiedState;
 
-        case "mutate/maximize":
+        case "modalMutateObserver/maximize":
             return { ...state, 
                 [action.name]: { 
                     ...state[action.name], 
@@ -37,7 +37,7 @@ export default function mutate(state = {}, action) {
                     y: `${NAV_HEIGHT}px` 
                 } };
 
-        case "mutate/position":
+        case "modalMutateObserver/position":
             return { ...state, 
                 [action.name]: { 
                     ...state[action.name], 
@@ -45,7 +45,7 @@ export default function mutate(state = {}, action) {
                     y: action.y 
                 } };
 
-        case "mutate/size":
+        case "modalMutateObserver/size":
             return { ...state, 
                 [action.name]: { 
                     ...state[action.name], 

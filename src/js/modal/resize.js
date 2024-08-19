@@ -72,8 +72,8 @@ Resize.prototype.resizeClickStartHandler = function (e, _this){
 }
 
 Resize.prototype.updateAsCurrent = function(name, mousePosition, resizeTriggerProp){
-    store.dispatch({ type: "active", name });
-    store.dispatch({ type: "resize/start", name, mousePosition, resizeTriggerProp});
+    store.dispatch({ type: "focus", name });
+    store.dispatch({ type: "modalResizeObserver/start", name, mousePosition, resizeTriggerProp});
 
     return this;
 }
@@ -82,7 +82,7 @@ Resize.prototype.updateAsCurrent = function(name, mousePosition, resizeTriggerPr
  * Get resized modal information
  */
 Resize.prototype.resizeInfo = function (){
-    const selectValue = state => state.resize;
+    const selectValue = state => state.modalResizeObserver;
     const resizeInfo = selectValue(store.getState())
     return resizeInfo;
 }
@@ -458,7 +458,7 @@ Resize.prototype.checkIfMinimumHeight = function(height){
  * Get all the modal information
  */
 Resize.prototype.getModal = function(){
-    const selectValue = state => state.mutate;
+    const selectValue = state => state.modalMutateObserver;
     const modal = selectValue(store.getState());
     return modal;
 }
@@ -476,7 +476,7 @@ Resize.prototype.getOriginSize = function(){
  */
  Resize.prototype.updateModalSize = function(size){
     store.dispatch({ 
-        type: "mutate/size", 
+        type: "modalMutateObserver/size", 
         name: this.resizeInfo().name, 
         width: `${size.width}px`, 
         height: `${size.height}px`
@@ -490,7 +490,7 @@ Resize.prototype.getOriginSize = function(){
 Resize.prototype.updateModal = function(size, position) {
     // store.dispatch(setPositionAndSizeOfModal(getName(), position, size));
     store.dispatch({ 
-        type: "mutate/update", 
+        type: "modalMutateObserver/update", 
         name: this.resizeInfo().name, 
         x: `${position.x}px`, 
         y: `${position.y}px`, 
@@ -529,7 +529,7 @@ Resize.prototype.finishResizeHandler = function(e){
     this.body.style.cursor = "default";
 
     //if user was resizing, quit resize
-    this.isModalResized() && store.dispatch({ type: "resize/end" });
+    this.isModalResized() && store.dispatch({ type: "modalResizeObserver/end" });
 
 }
 
