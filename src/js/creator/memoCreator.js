@@ -4,7 +4,7 @@
  * @constructor
  * @classdesc MemoCreator controller
  */
-export function MemoCreator (width, height){
+export function MemoCreator (memoCnt, width, height){
     this.ELEMS = {
         CONTAINER: "CONTAINER",
         HEADER: "HEADER",
@@ -15,7 +15,7 @@ export function MemoCreator (width, height){
     this.defSetting = {
         width: width + "px",
         height: height + "px",
-        top: 60,
+        top: 60,    
         left: 0,
         randomPosRange: 50
     };
@@ -32,9 +32,9 @@ export function MemoCreator (width, height){
                         <i class="bi bi-border-all"></i>
                 </button>    
                 <div>
-                    <label for="bgColor" title="Background color" class="btn btn-sm btn-transparent">
+                    <label for="bgColor_${memoCnt}" title="Background color" class="btn btn-sm btn-transparent">
                         <i class="bi bi-palette"></i>
-                        <input type="color" id="bgColor" class="d-none" ></input>
+                        <input type="color" id="bgColor_${memoCnt}" data-click="bgColor" class="d-none" ></input>
                     </label>
                 </div>
                 <button type="button" title="Minimize" aria-label="Minimize"

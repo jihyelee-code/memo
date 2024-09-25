@@ -9,7 +9,7 @@ import { getZIndex, store } from "../reducer/store";
 export function ButtonEvnt(modal){
   // this.ROLE_CLOSE = '[data-role="close"]';
   this.BTN_CLICK = {
-    BG_COLOR: '[id="bgColor"]',
+    BG_COLOR: '[data-click="bgColor"]',
     MINIMIZE: '[data-click="minimize"]',
     MAXIMIZE: '[data-click="maximize"]',
     CLOSE: '[data-click="close"]',
@@ -40,9 +40,12 @@ ButtonEvnt.prototype.tableEvent = function (){
 
 ButtonEvnt.prototype.bgColorEvent = function (){
   const bgColorBtn = this.modal.querySelector(this.BTN_CLICK.BG_COLOR);
+  const modal = this.modal;
+  console.log(modal, bgColorBtn)
   bgColorBtn.addEventListener('change', e => {
     e.preventDefault();
-    this.modal.querySelector('.card-header').style.backgroundColor = e.target.value;
+    console.log(modal, bgColorBtn)
+    modal.querySelector('.card-header').style.backgroundColor = e.target.value;
   })
 }
 

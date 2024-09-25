@@ -26,7 +26,7 @@ Memo.prototype.createMemoHandler = function(e, _this){
     e.preventDefault();
     //create a memo box through MemoCreator
     const box = document.querySelector('#wall');
-    const creator = new MemoCreator(this.size.width, this.size.height);
+    const creator = new MemoCreator(_this.memoCnt, this.size.width, this.size.height);
     const elems = creator.init();
     elems.container.setAttribute('data-name', `memo_${_this.memoCnt}`);
     //append it to html
