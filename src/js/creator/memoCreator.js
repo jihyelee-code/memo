@@ -31,7 +31,7 @@ export function MemoCreator (memoCnt, width, height){
         INNER_HTML: `
             <div class="flex-grow-1" data-click="drag"> </div>
             <div class="d-flex align-items-center">
-                <div>
+                <div class="d-flex">
                     <label for="bgColor_${memoCnt}" title="Background color" class="btn btn-sm btn-transparent">
                         <i class="bi bi-palette"></i>
                         <input type="color" id="bgColor_${memoCnt}" data-click="bgColor" class="d-none" ></input>
