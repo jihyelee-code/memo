@@ -8,7 +8,7 @@ A dynamic and fully interactive sticky note (modal-style) app built with **Vanil
 ## 🚀 Features
 
 - 📝 Add / Delete Notes  
-- 🎨 Change Background Color  
+- 🎨 Custom Color Picker  
 - 🖱️ Drag & Drop  
 - 📐 Resizable Notes  
 - 🗂️ Minimize / Maximize  
