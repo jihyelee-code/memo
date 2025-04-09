@@ -23,14 +23,14 @@ export function MemoCreator (memoCnt, width, height){
     this.HEADER = {
         TAG: "section",
         CLASS_NAME: ["card-header", "d-flex", "justify-content-end"],
+        // <button type="button" title="Table" aria-label="Table"
+        //         data-click="table"
+        //         class="btn btn-sm btn-transparent">
+        //         <i class="bi bi-border-all"></i>
+        // </button>    
         INNER_HTML: `
             <div class="flex-grow-1" data-click="drag"> </div>
             <div class="d-flex align-items-center">
-                <button type="button" title="Table" aria-label="Table"
-                        data-click="table"
-                        class="btn btn-sm btn-transparent">
-                        <i class="bi bi-border-all"></i>
-                </button>    
                 <div>
                     <label for="bgColor_${memoCnt}" title="Background color" class="btn btn-sm btn-transparent">
                         <i class="bi bi-palette"></i>

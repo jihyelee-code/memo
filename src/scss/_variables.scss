@@ -1359,6 +1359,8 @@ $card-color:                        null !default;
 $card-bg:                           var(--#{$prefix}body-bg) !default;
 $card-img-overlay-padding:          $spacer !default;
 $card-group-margin:                 $grid-gutter-width * .5 !default;
+$card-corner-width:                 2px;
+$card-corner-height:                 $card-corner-width;
 // $card-header-height:                calc(#{$btn-padding-y-sm} + #{$btn-line-height}rem);
 // scss-docs-end card-variables
 

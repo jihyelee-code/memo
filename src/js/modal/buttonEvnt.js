@@ -13,7 +13,7 @@ export function ButtonEvnt(modal){
     MINIMIZE: '[data-click="minimize"]',
     MAXIMIZE: '[data-click="maximize"]',
     CLOSE: '[data-click="close"]',
-    TABLE: '[data-click="table"]',
+    // TABLE: '[data-click="table"]',
     DRAG: '[data-click="drag"]'
   };
 
@@ -29,22 +29,20 @@ export function ButtonEvnt(modal){
 
 }
 
-ButtonEvnt.prototype.tableEvent = function (){
-  const tableBtn = this.modal.querySelector(this.BTN_CLICK.TABLE);
-  tableBtn.addEventListener('click', e => {
-    e.preventDefault();
-    // const table = new Tabulator(`${this.modalName}_`)
-  })
-}
+// ButtonEvnt.prototype.tableEvent = function (){
+//   const tableBtn = this.modal.querySelector(this.BTN_CLICK.TABLE);
+//   tableBtn.addEventListener('click', e => {
+//     e.preventDefault();
+//     // const table = new Tabulator(`${this.modalName}_`)
+//   })
+// }
 
 
 ButtonEvnt.prototype.bgColorEvent = function (){
   const bgColorBtn = this.modal.querySelector(this.BTN_CLICK.BG_COLOR);
   const modal = this.modal;
-  console.log(modal, bgColorBtn)
   bgColorBtn.addEventListener('change', e => {
     e.preventDefault();
-    console.log(modal, bgColorBtn)
     modal.querySelector('.card-header').style.backgroundColor = e.target.value;
   })
 }
