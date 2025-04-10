@@ -613,7 +613,7 @@ $font-family-code:            var(--#{$prefix}font-monospace) !default;
 // $font-size-base affects the font size of the body text
 $font-size-root:              null !default;
 $font-size-base:              .8rem; // Assumes the browser default, typically `16px`
-$font-size-sm:                $font-size-base * .62;
+$font-size-sm:                $font-size-base * .72;
 $font-size-lg:                $font-size-base * 1;
 
 $font-weight-lighter:         lighter !default;
@@ -1348,7 +1348,7 @@ $card-subtitle-color:               null !default;
 $card-border-width:                 var(--#{$prefix}border-width) !default;
 $card-border-color:                 var(--#{$prefix}border-color-translucent) !default;
 $card-border-radius:                var(--#{$prefix}border-radius) !default;
-$card-box-shadow:                   null !default;
+$card-box-shadow:                   0 8px 24px rgba(0, 0, 0, 0.08);
 $card-inner-border-radius:          subtract($card-border-radius, $card-border-width) !default;
 $card-cap-padding-y:                $card-spacer-y * .5 !default;
 $card-cap-padding-x:                $card-spacer-x * .5;

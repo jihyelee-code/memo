@@ -43,7 +43,8 @@ ButtonEvnt.prototype.bgColorEvent = function (){
   const modal = this.modal;
   bgColorBtn.addEventListener('change', e => {
     e.preventDefault();
-    modal.querySelector('.card-header').style.backgroundColor = e.target.value;
+    // modal.querySelector('.card-header').style.backgroundColor = e.target.value;
+    modal.style.backgroundColor = e.target.value;
   })
 }
 

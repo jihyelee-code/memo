@@ -37,6 +37,7 @@
   border: var(--#{$prefix}card-border-width) solid var(--#{$prefix}card-border-color);
   @include border-radius(var(--#{$prefix}card-border-radius));
   @include box-shadow(var(--#{$prefix}card-box-shadow));
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
 
   > hr {
     margin-right: 0;
@@ -66,11 +67,13 @@
   }
 
   .btn{
-    visibility: hidden;
+    // visibility: hidden;
   }
 
   &:hover{
     // background-color: $light;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
+    // transform: translateY(-2px);
 
     .btn{
       visibility: visible;
@@ -133,7 +136,7 @@
 
 .card-header {
   // padding: var(--#{$prefix}card-cap-padding-y) var(--#{$prefix}card-cap-padding-x);
-  padding: 0;
+  padding: 9px;
   margin-bottom: 0; // Removes the default margin-bottom of <hN>
   color: var(--#{$prefix}card-cap-color);
 
