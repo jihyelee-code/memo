@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
+    <title>Memo</title>
+<link rel="icon" href="./favicon.ico"><link href="./css/index.css" rel="stylesheet"></head>
+<body class="vh-100">
+    <div class="container-fluid h-100">
+        <nav style="height: 40px; z-index: 1; left:0;" 
+             class="w-100 border-bottom position-absolute d-flex justify-content-center align-items-center">
+            <div class="d-flex justify-content-center">
+                <button type="button" aria-label="Add" title="New Memo" evnt="addMemo" 
+                        class="btn btn-sm btn-outline-primary">
+                    <i class="bi bi-pencil-fill" 
+                       style="font-size: 17px;"></i>
+                </button> 
+            </div>
+        </nav>
+        <main class="w-100 h-100 position-absolute" 
+              style="z-index:0; left: 0; " id="wall">
+        </main>
+    </div>
+<script src="./js/index.bundle.js"></script></body>
+</html>
