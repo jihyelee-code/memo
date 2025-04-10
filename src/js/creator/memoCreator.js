@@ -9,7 +9,8 @@ export function MemoCreator (memoCnt, width, height){
         CONTAINER: "CONTAINER",
         HEADER: "HEADER",
         BODY: "BODY",
-        CORNERS: "CORNERS"
+        CORNERS: "CORNERS",
+        FOOTER: "FOOTER"
     };
 
     this.defSetting = {
@@ -31,12 +32,7 @@ export function MemoCreator (memoCnt, width, height){
         INNER_HTML: `
             <div class="flex-grow-1" data-click="drag"> </div>
             <div class="d-flex align-items-center">
-                <div class="d-flex">
-                    <label for="bgColor_${memoCnt}" title="Background color" class="btn btn-sm btn-transparent">
-                        <i class="bi bi-palette"></i>
-                        <input type="color" id="bgColor_${memoCnt}" data-click="bgColor" class="d-none" ></input>
-                    </label>
-                </div>
+         
                 <button type="button" title="Minimize" aria-label="Minimize"
                         data-click="minimize"
                         class="btn btn-sm btn-transparent d-none">
@@ -61,6 +57,19 @@ export function MemoCreator (memoCnt, width, height){
         CLASS_NAME: ["card-body"],
         INNER_HTML: `
         <textarea class="w-100 h-100"></textarea>
+        `
+    };
+
+    this.FOOTER = {
+        TAG: "section",
+        CLASS_NAME: ["card-footer"],
+        INNER_HTML: `
+            <div class="d-flex">
+                <label for="bgColor_${memoCnt}" title="Background color" class="btn px-2 btn-transparent">
+                    <i class="bi bi-palette"></i>
+                    <input type="color" id="bgColor_${memoCnt}" data-click="bgColor" class="d-none" ></input>
+                </label>
+            </div>
         `
     };
 
@@ -114,6 +123,7 @@ MemoCreator.prototype.init = function (){
     const container = this.createElem(this.ELEMS.CONTAINER);
     const header = this.createElem(this.ELEMS.HEADER); 
     const body = this.createElem(this.ELEMS.BODY); 
+    const footer = this.createElem(this.ELEMS.FOOTER); 
     const corners = this.createElem(this.ELEMS.CORNERS); 
 
     container.style.width = this.defSetting.width;
@@ -123,12 +133,14 @@ MemoCreator.prototype.init = function (){
 
     container.appendChild(header);
     container.appendChild(body);
+    container.appendChild(footer);
     container.appendChild(corners);
 
     const elems = {
         container,
         header,
         body,
+        footer,
         corners
     }
 
