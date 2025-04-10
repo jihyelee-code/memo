@@ -161,7 +161,7 @@ module.exports = {
             "assert": require.resolve("assert/")
         },
     },
-    devServer: devMode ? {
+    devServer: devMode && {
         server: "https",
         static: path.join(__dirname, 'docs/'),
         compress: true,
@@ -178,6 +178,6 @@ module.exports = {
                 { from: /^\/$/, to: '/index.html'}
             ]
         }
-    } : undefined,
+    },
 };
 
