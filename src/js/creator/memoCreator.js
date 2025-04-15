@@ -69,6 +69,12 @@ export function MemoCreator (memoCnt, width, height){
                     <i class="bi bi-palette"></i>
                     <input type="color" id="bgColor_${memoCnt}" data-click="bgColor" class="d-none" ></input>
                 </label>
+
+                <button type="button" title="Font weight" aria-label="Font weight"  
+                        data-click="fontWeight"
+                        class="btn btn-sm btn-transparent">
+                        <i class="bi bi-type-bold"></i>
+                </button>
             </div>
         `
     };

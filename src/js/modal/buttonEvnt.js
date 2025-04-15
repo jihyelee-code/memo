@@ -9,6 +9,7 @@ import { getZIndex, store } from "../reducer/store";
 export function ButtonEvnt(modal){
   // this.ROLE_CLOSE = '[data-role="close"]';
   this.BTN_CLICK = {
+    FONT_WEIGHT: '[data-click="fontWeight"]',
     BG_COLOR: '[data-click="bgColor"]',
     MINIMIZE: '[data-click="minimize"]',
     MAXIMIZE: '[data-click="maximize"]',
@@ -37,14 +38,37 @@ export function ButtonEvnt(modal){
 //   })
 // }
 
+ButtonEvnt.prototype.fontWeightEvent = function (){
+  const fntWeightBtn = this.modal.querySelector(this.BTN_CLICK.FONT_WEIGHT);
+  // const modal = this.modal;
+  fntWeightBtn.addEventListener('click', e => {
+    e.preventDefault();
+
+    const selection = window.getSelection();
+    if (!selection.rangeCount) return;
+
+    const range = selection.getRangeAt(0);
+
+    // return when its blank
+    // if (selection.isCollapsed) return;
+    console.log(selection, range.extractContents())
+    const strong = document.createElement("strong");
+    strong.appendChild(range.extractContents());
+    range.insertNode(strong);
+
+    // release selection
+    selection.removeAllRanges();
+
+  })
+}
+
 
 ButtonEvnt.prototype.bgColorEvent = function (){
   const bgColorBtn = this.modal.querySelector(this.BTN_CLICK.BG_COLOR);
   const modal = this.modal;
   bgColorBtn.addEventListener('change', e => {
     e.preventDefault();
-    // modal.querySelector('.card-header').style.backgroundColor = e.target.value;
-    modal.style.backgroundColor = e.target.value;
+    modal.querySelector('.card-header').style.backgroundColor = e.target.value;
   })
 }
 
@@ -216,6 +240,7 @@ ButtonEvnt.prototype.init = function (){
   this.closeEvent();
   // this.minimizeEvent();
   this.bgColorEvent();
+  this.fontWeightEvent();
   // this.maximizeEvent();
   this.modal.querySelector(this.BTN_CLICK.MINIMIZE)
       .addEventListener('click', e => this.minimizeEvent(e, this));

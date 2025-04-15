@@ -37,7 +37,7 @@
   border: var(--#{$prefix}card-border-width) solid var(--#{$prefix}card-border-color);
   @include border-radius(var(--#{$prefix}card-border-radius));
   @include box-shadow(var(--#{$prefix}card-box-shadow));
-  transition: box-shadow 0.2s ease, transform 0.2s ease;
+  transition: box-shadow 0.2s ease, transform 0.2s ease, background 0.5s ease;
 
   > hr {
     margin-right: 0;
