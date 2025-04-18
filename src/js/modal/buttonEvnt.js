@@ -102,8 +102,8 @@ ButtonEvnt.prototype.closeEvent = function (){
     btn.addEventListener('click', e => {
       e.preventDefault();
 
+
       //unsubscribe
-      // unsubscribe();
       this.unsubscribe();
       
       //remove from redux store
@@ -111,8 +111,15 @@ ButtonEvnt.prototype.closeEvent = function (){
       store.dispatch({ type: "focus", name: "" });
       
       //remove html
-      this.modal.parentElement.removeChild(this.modal);
-      // this = null;
+      this.modal.classList.remove("card-show");
+
+      setTimeout(() => {
+        this.modal.classList.add('card-hide');
+      }, 100);
+
+      setTimeout(() => {
+        this.modal.parentElement.removeChild(this.modal);
+      }, 1000);
 
     })
 }

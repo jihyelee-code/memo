@@ -38,6 +38,8 @@
   @include border-radius(var(--#{$prefix}card-border-radius));
   @include box-shadow(var(--#{$prefix}card-box-shadow));
   transition: box-shadow 0.2s ease, transform 0.2s ease, background 0.5s ease;
+  // transition: transform 0.2s ease-out, opacity 0.2s ease-out;
+  transform: scale(0);
 
   > hr {
     margin-right: 0;
@@ -358,4 +360,13 @@
   cursor: ew-resize;
   bottom: 0;
   left: 0;
+}
+
+
+.card-show{
+  transform: scale(1); 
+}
+
+.card-hide {
+  transform: scale(0);
 }
