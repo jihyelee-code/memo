@@ -67,7 +67,7 @@
   }
 
   .btn{
-    // visibility: hidden;
+    visibility: hidden;
   }
 
   &:hover{
@@ -135,7 +135,7 @@
 //
 
 .card-header {
-  padding: var(--#{$prefix}card-cap-padding-y) var(--#{$prefix}card-cap-padding-x) 0 var(--#{$prefix}card-cap-padding-x);
+  padding: 0 var(--#{$prefix}card-cap-padding-x) 0 var(--#{$prefix}card-cap-padding-x);
   // padding: 3px;
   padding-bottom: 0;
   margin-bottom: 0; // Removes the default margin-bottom of <hN>
@@ -143,6 +143,10 @@
 
   &:first-child {
     @include border-radius(var(--#{$prefix}card-inner-border-radius) var(--#{$prefix}card-inner-border-radius) 0 0);
+  }
+
+  &:hover{
+    cursor: pointer;
   }
 }
 
