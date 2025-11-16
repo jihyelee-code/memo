@@ -31,7 +31,7 @@ module.exports = {
             './src/scss/bootstrap.scss',
         ]
     },
-    devtool: 'inline-source-map',
+    devtool: devMode ? 'inline-source-map' : false,
     plugins: [
         new CleanWebpackPlugin(),
         // new CopyPlugin({
@@ -56,6 +56,7 @@ module.exports = {
             chunkFilename: 'css/[id].css',
         }),
         new webpack.DefinePlugin({
+            'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
             'process.env.NODE_DEBUG': JSON.stringify(process.env.NODE_DEBUG)
         })
     ],
