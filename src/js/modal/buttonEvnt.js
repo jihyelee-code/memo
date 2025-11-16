@@ -1,4 +1,5 @@
 import { getZIndex, store } from "../reducer/store";
+import { hexToRgb, isDarkColor, makeDarkColor } from "./colorChanger";
 
 /**
  * @author JHLEE
@@ -41,9 +42,29 @@ export function ButtonEvnt(modal){
 ButtonEvnt.prototype.bgColorEvent = function (){
   const bgColorBtn = this.modal.querySelector(this.BTN_CLICK.BG_COLOR);
   const modal = this.modal;
+
+
+
   bgColorBtn.addEventListener('change', e => {
     e.preventDefault();
-    modal.querySelector('.card-header').style.backgroundColor = e.target.value;
+    const bgColor = e.target.value;
+    const cardHeader = modal.querySelector('.card-header'); 
+    cardHeader.style.backgroundColor = bgColor;
+    
+    const rgb = hexToRgb(bgColor);
+    let iconColor = null;
+    if(isDarkColor(rgb.r, rgb.g, rgb.b)){
+      iconColor = "#FFFFFF";
+    }else{
+      const black = { r: 0, g: 0, b: 0, a: 0 };
+      const darkenedColor = makeDarkColor(black, 40);
+      iconColor = `rgb(${darkenedColor.r}, ${darkenedColor.g}, ${darkenedColor.b})`;
+    }
+
+    cardHeader.querySelectorAll('button').forEach ( each => {
+      each.style.color = iconColor;
+    })
+  
   })
 }
 
