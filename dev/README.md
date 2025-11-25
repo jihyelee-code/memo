@@ -93,8 +93,9 @@ memo/
 
 ## 📌 To-Do Ideas
 
-- [ ] Add `Table` 
-- [ ] Add Font Setting
+- [ ] `Table` 
+- [ ] Font Setting
+- [ ] A live collaborative memo
 
 ---
 
