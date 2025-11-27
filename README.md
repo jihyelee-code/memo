@@ -95,6 +95,7 @@ memo/
 
 - [ ] Add `Table` 
 - [ ] Add Font Setting
+- [ ] Add Board
 
 ---
 
