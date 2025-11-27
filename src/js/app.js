@@ -11,11 +11,8 @@ export const NAV_HEIGHT = 40;
 
 
 function Memo (){
+    this.NEW_MEMO = "newMemo";
     this.memoCnt = 0;
-    this.size = {
-        width: "200px",
-        height: "230px"
-    };
     this.dragnDrop = null;
     this.resize = null;
     this.mv = null;
@@ -25,25 +22,25 @@ function Memo (){
 Memo.prototype.createMemoHandler = function(e, _this){
     e.preventDefault();
     //create a memo box through MemoCreator
-    const box = document.querySelector('#wall');
-    const creator = new MemoCreator(_this.memoCnt, this.size.width, this.size.height);
-    const elems = creator.init();
-    elems.container.setAttribute('data-name', `memo_${_this.memoCnt}`);
+    const wall = document.querySelector('#wall');
+    const creator = new MemoCreator(_this.memoCnt, wall);
+    const elems = creator.createElems().frameSetUp().showCard().updateObserver();
+    // elems.container.setAttribute('data-name', `memo_${_this.memoCnt}`);
     //append it to html
-    box.appendChild(elems.container);
+    // wall.appendChild(elems.container);
 
-    const memoTextArea = elems.body.querySelector('textarea');
-    memoTextArea.focus();
-    elems.container.classList.add('card-show');
+    // const memoTextArea = elems.body.querySelector('textarea');
+    // memoTextArea.focus();
+    // elems.container.classList.add('card-show');
 
-    store.dispatch({
-        type: "modalMutateObserver/update",
-        name: `memo_${_this.memoCnt}`,
-        x: elems.container.style.left,
-        y: elems.container.style.top,
-        width: this.size.width,
-        height: this.size.height
-    });
+    // store.dispatch({
+    //     type: "modalMutateObserver/update",
+    //     name: `memo_${_this.memoCnt}`,
+    //     x: elems.container.style.left,
+    //     y: elems.container.style.top,
+    //     width: this.size.width,
+    //     height: this.size.height
+    // });
 
     
 
@@ -60,14 +57,14 @@ Memo.prototype.createMemoHandler = function(e, _this){
 }
 
 Memo.prototype.init = function(){
-    const ADD_BTN_ATTR = "addMemo";
+    const ADD_BTN_ATTR = this.NEW_MEMO;
     const addBtn = document.querySelector(`[evnt="${ADD_BTN_ATTR}"]`);
     addBtn.addEventListener('click', (e) => this.createMemoHandler(e, this));
     
     this.dragnDrop = new DragnDrop();
     this.dragnDrop.bodyEvnts();
 
-    this.resize = new Resize(this.size.width, this.size.height);
+    this.resize = new Resize();
     this.resize.subscribe();
 
 }

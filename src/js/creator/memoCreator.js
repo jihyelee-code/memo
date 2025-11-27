@@ -1,10 +1,14 @@
+import { store } from "../reducer/store";
+
 /**
  * @author JHLEE
  * @class MemoCreator
  * @constructor
  * @classdesc MemoCreator controller
  */
-export function MemoCreator (memoCnt, width, height){
+export function MemoCreator (memoCnt, mother){
+    this.memoCnt = memoCnt
+    this.mother = mother;
     this.ELEMS = {
         CONTAINER: "CONTAINER",
         HEADER: "HEADER",
@@ -14,8 +18,8 @@ export function MemoCreator (memoCnt, width, height){
     };
 
     this.defSetting = {
-        width: width + "px",
-        height: height + "px",
+        width: "200px",
+        height: "230px",
         top: 60,    
         left: 0,
         randomPosRange: 50
@@ -65,9 +69,9 @@ export function MemoCreator (memoCnt, width, height){
         CLASS_NAME: ["card-footer"],
         INNER_HTML: `
             <div class="d-flex">
-                <label for="bgColor_${memoCnt}" title="Background color" class="btn px-2 btn-transparent">
+                <label for="bgColor_${this.memoCnt}" title="Background color" class="btn p-1 btn-transparent">
                     <i class="bi bi-palette"></i>
-                    <input type="color" id="bgColor_${memoCnt}" data-click="bgColor" class="d-none" ></input>
+                    <input type="color" id="bgColor_${this.memoCnt}" data-click="bgColor" class="d-none" ></input>
                 </label>
             </div>
         `
@@ -94,6 +98,12 @@ export function MemoCreator (memoCnt, width, height){
         INNER_HTML: ``
     };
 
+    this.container = null;
+    this.header = null;
+    this.body = null;
+    this.footer = null;
+    this.corners = null;
+
 }
 
 /**
@@ -119,34 +129,63 @@ MemoCreator.prototype.createElem = function (target){
  * @description 
  * @return {MemoCreator}
  */
-MemoCreator.prototype.init = function (){
-    const container = this.createElem(this.ELEMS.CONTAINER);
-    const header = this.createElem(this.ELEMS.HEADER); 
-    const body = this.createElem(this.ELEMS.BODY); 
-    const footer = this.createElem(this.ELEMS.FOOTER); 
-    const corners = this.createElem(this.ELEMS.CORNERS); 
+MemoCreator.prototype.createElems = function (){
+    this.container = this.createElem(this.ELEMS.CONTAINER);
+    this.header = this.createElem(this.ELEMS.HEADER); 
+    this.body = this.createElem(this.ELEMS.BODY); 
+    this.footer = this.createElem(this.ELEMS.FOOTER); 
+    this.corners = this.createElem(this.ELEMS.CORNERS); 
 
-    container.style.width = this.defSetting.width;
-    container.style.height = this.defSetting.height;
-    container.style.top = `${this.defSetting.top + getRandomInt(this.defSetting.randomPosRange)}px`;
-    container.style.left = `${this.defSetting.left + getRandomInt(this.defSetting.randomPosRange)}px`; 
-
-    container.appendChild(header);
-    container.appendChild(body);
-    container.appendChild(footer);
-    container.appendChild(corners);
-
-    const elems = {
-        container,
-        header,
-        body,
-        footer,
-        corners
-    }
-
-
-    return elems;
+    return this;
 }
+
+MemoCreator.prototype.frameSetUp = function ( ){
+    //size and location
+    this.container.style.width = this.defSetting.width;
+    this.container.style.height = this.defSetting.height;
+    this.container.style.top = `${this.defSetting.top + getRandomInt(this.defSetting.randomPosRange)}px`;
+    this.container.style.left = `${this.defSetting.left + getRandomInt(this.defSetting.randomPosRange)}px`; 
+
+    //attribute
+    this.container.setAttribute('data-name', `memo_${this.memoCnt}`);
+
+    //structure
+    this.container.appendChild(this.header);
+    this.container.appendChild(this.body);
+    this.container.appendChild(this.footer);
+    this.container.appendChild(this.corners);
+    this.mother.appendChild(this.container);
+
+    //focus
+    this.body.querySelector('textarea').focus();
+
+    return this;
+}
+
+MemoCreator.prototype.showCard = function(){
+    this.container.classList.add('card-show');
+
+    return this;
+}
+
+MemoCreator.prototype.updateObserver = function(){
+    store.dispatch({
+        type: "modalMutateObserver/update",
+        name: `memo_${this.memoCnt}`,
+        x: this.container.style.left,
+        y: this.container.style.top,
+        width: this.defSetting.width,
+        height: this.defSetting.height
+    });
+
+    return this;
+}
+
+MemoCreator.prototype.addButtonEvnt = function (){
+
+}
+
+
 
 
 function getRandomInt(max) {

@@ -12,6 +12,7 @@
     "start:win32": "set NODE_ENV=development && webpack serve --open",
     "start:default": "set NODE_ENV=development && webpack serve --open",
     "start:darwin:linux": "export NODE_ENV=development && webpack serve --open",
+    "deploy": "bash ../deploy.sh",
     "watch": "webpack --watch",
     "server": "node ./bin/www"
   },
