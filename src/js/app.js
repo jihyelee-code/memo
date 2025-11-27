@@ -19,47 +19,30 @@ function Memo (){
 }
 
 
-Memo.prototype.createMemoHandler = function(e, _this){
-    e.preventDefault();
+Memo.prototype.newMemoHandler = function(_this){
     //create a memo box through MemoCreator
     const wall = document.querySelector('#wall');
     const creator = new MemoCreator(_this.memoCnt, wall);
-    const elems = creator.createElems().frameSetUp().showCard().updateObserver();
-    // elems.container.setAttribute('data-name', `memo_${_this.memoCnt}`);
-    //append it to html
-    // wall.appendChild(elems.container);
+    const memoElems = creator.init();
 
-    // const memoTextArea = elems.body.querySelector('textarea');
-    // memoTextArea.focus();
-    // elems.container.classList.add('card-show');
-
-    // store.dispatch({
-    //     type: "modalMutateObserver/update",
-    //     name: `memo_${_this.memoCnt}`,
-    //     x: elems.container.style.left,
-    //     y: elems.container.style.top,
-    //     width: this.size.width,
-    //     height: this.size.height
-    // });
-
-    
-
-    //Subscribe if modal attributes such as 
-    //width, height, z-index and position get changes.
-    const mv = new ButtonEvnt(elems.container);
-    mv.init();
-    this.dragnDrop.init(elems.header.querySelector('[data-click="drag"]'));
-    this.resize.init(elems.container);
-
+    const buttonEvent = new ButtonEvnt(memoElems.container);
+    buttonEvent.init();
+    _this.dragnDrop.init(memoElems.header.querySelector('[data-click="drag"]'));
+    _this.resize.init(memoElems.container);
 
     _this.memoCnt++;
-    
+
+    return null;
 }
 
 Memo.prototype.init = function(){
-    const ADD_BTN_ATTR = this.NEW_MEMO;
-    const addBtn = document.querySelector(`[evnt="${ADD_BTN_ATTR}"]`);
-    addBtn.addEventListener('click', (e) => this.createMemoHandler(e, this));
+    //add new memo
+    const newMemoBtn = document.querySelector(`[evnt="${this.NEW_MEMO}"]`);
+    newMemoBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        this.newMemoHandler(this);
+
+    });
     
     this.dragnDrop = new DragnDrop();
     this.dragnDrop.bodyEvnts();
@@ -67,6 +50,7 @@ Memo.prototype.init = function(){
     this.resize = new Resize();
     this.resize.subscribe();
 
+    return this;
 }
 
 const memo = new Memo();

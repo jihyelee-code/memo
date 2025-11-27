@@ -98,11 +98,13 @@ export function MemoCreator (memoCnt, mother){
         INNER_HTML: ``
     };
 
-    this.container = null;
-    this.header = null;
-    this.body = null;
-    this.footer = null;
-    this.corners = null;
+    this.elems = {
+        container : null,
+        header : null,
+        body : null,
+        footer : null,
+        corners : null
+    };
 
 }
 
@@ -130,50 +132,52 @@ MemoCreator.prototype.createElem = function (target){
  * @return {MemoCreator}
  */
 MemoCreator.prototype.createElems = function (){
-    this.container = this.createElem(this.ELEMS.CONTAINER);
-    this.header = this.createElem(this.ELEMS.HEADER); 
-    this.body = this.createElem(this.ELEMS.BODY); 
-    this.footer = this.createElem(this.ELEMS.FOOTER); 
-    this.corners = this.createElem(this.ELEMS.CORNERS); 
+    this.elems.container = this.createElem(this.ELEMS.CONTAINER);
+    this.elems.header = this.createElem(this.ELEMS.HEADER); 
+    this.elems.body = this.createElem(this.ELEMS.BODY); 
+    this.elems.footer = this.createElem(this.ELEMS.FOOTER); 
+    this.elems.corners = this.createElem(this.ELEMS.CORNERS); 
 
     return this;
 }
 
 MemoCreator.prototype.frameSetUp = function ( ){
     //size and location
-    this.container.style.width = this.defSetting.width;
-    this.container.style.height = this.defSetting.height;
-    this.container.style.top = `${this.defSetting.top + getRandomInt(this.defSetting.randomPosRange)}px`;
-    this.container.style.left = `${this.defSetting.left + getRandomInt(this.defSetting.randomPosRange)}px`; 
+    this.elems.container.style.width = this.defSetting.width;
+    this.elems.container.style.height = this.defSetting.height;
+    this.elems.container.style.top = `${this.defSetting.top + getRandomInt(this.defSetting.randomPosRange)}px`;
+    this.elems.container.style.left = `${this.defSetting.left + getRandomInt(this.defSetting.randomPosRange)}px`; 
 
     //attribute
-    this.container.setAttribute('data-name', `memo_${this.memoCnt}`);
+    this.elems.container.setAttribute('data-name', `memo_${this.memoCnt}`);
 
     //structure
-    this.container.appendChild(this.header);
-    this.container.appendChild(this.body);
-    this.container.appendChild(this.footer);
-    this.container.appendChild(this.corners);
-    this.mother.appendChild(this.container);
+    this.elems.container.appendChild(this.elems.header);
+    this.elems.container.appendChild(this.elems.body);
+    this.elems.container.appendChild(this.elems.footer);
+    this.elems.container.appendChild(this.elems.corners);
+    this.mother.appendChild(this.elems.container);
 
     //focus
-    this.body.querySelector('textarea').focus();
+    this.elems.body.querySelector('textarea').focus();
 
     return this;
 }
 
 MemoCreator.prototype.showCard = function(){
-    this.container.classList.add('card-show');
+    this.elems.container.classList.add('card-show');
 
     return this;
 }
 
 MemoCreator.prototype.updateObserver = function(){
+    //Subscribe if modal attributes such as 
+    //width, height, z-index and position get changes.
     store.dispatch({
         type: "modalMutateObserver/update",
         name: `memo_${this.memoCnt}`,
-        x: this.container.style.left,
-        y: this.container.style.top,
+        x: this.elems.container.style.left,
+        y: this.elems.container.style.top,
         width: this.defSetting.width,
         height: this.defSetting.height
     });
@@ -181,8 +185,9 @@ MemoCreator.prototype.updateObserver = function(){
     return this;
 }
 
-MemoCreator.prototype.addButtonEvnt = function (){
-
+MemoCreator.prototype.init = function (){
+    this.createElems().frameSetUp().showCard().updateObserver();
+    return this.elems;
 }
 
 
